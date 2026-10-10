@@ -33,7 +33,7 @@ realm; with a level cap of 60 the ranks above 60 are never learned.
 
 ## Installation
 
-**With [AFK Realm](https://github.com/aspollon/AFK-Realm)** (0.8.2 or newer): add the module. AFK Realm applies the
+**With [AFK Realm](https://github.com/aspollon/AFK-Realm)** (0.8.3 or newer): add the module. AFK Realm applies the
 two patches, sets `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, applies the SQL of the module, builds the client
 patch from your own game client (`Data\patch-Y.MPQ`: the class choice, the race and class pairs and the talent table)
 and puts it into your game, and offers once to make the random bots anew so they come in the classic classes too. *Modules › Game client › Export as ZIP* gives the other
@@ -51,8 +51,10 @@ players the same patch.
    - `Interface\GlueXML\GlueXML.toc` of your client with the line `ClassicClasses.lua` after `CharacterCreate.xml`,
    - `DBFilesClient\Talent.dbc` of your client without the talents below id 100000 of the classic talent tabs
      (the list is in `afk-realm.json`),
-   - `DBFilesClient\CharBaseInfo.dbc` of your client with a row for every race and classic class pair it lacks
-     (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11).
+   - `DBFilesClient\CharBaseInfo.dbc` of your client without the Death Knight's rows and with a row for every race and
+     classic class pair it lacks (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11). The client
+     takes at most 31 classes for a race; with all 32 the character creation crashes, so the Death Knight, who cannot
+     be created next to the classic classes anyway, makes room.
 
 ## Status
 
