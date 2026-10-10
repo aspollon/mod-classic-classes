@@ -29,6 +29,11 @@ This module brings both together:
 - **The game client** (`client/ClassicClasses.lua`): the class choice of the character creation shows the classic
   classes in a row of their own under the classes of CoA. The client otherwise shows either the one or the other.
 - **The talent trees** of the classic classes show the Reborn talents only, instead of the stock ones on top of them.
+- **Talents of the bots** (`src/ClassicBots.cpp`): players pick the talents of a classic class in CoA's Character
+  Advancement; mod-playerbots knows only the WotLK talent tree. The stock talents of the classic tabs, which CoA keeps
+  piled on the first tier, are set aside on the server, so a bot learns the Reborn talents; and what a bot learns is
+  written into its Character Advancement build too, so it can be inspected like a player. A bot made before keeps its
+  talents and gets its build at its next login; making the bots anew gives all of them the Reborn talents.
 
 The talent points are those of CoA: 51 at level 60, as for the CoA classes. The spells come up to the level of the
 realm; with a level cap of 60 the ranks above 60 are never learned.
