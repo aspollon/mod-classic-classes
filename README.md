@@ -34,6 +34,12 @@ This module brings both together:
   piled on the first tier, are set aside on the server, so a bot learns the Reborn talents; and what a bot learns is
   written into its Character Advancement build too, so it can be inspected like a player. A bot made before keeps its
   talents and gets its build at its next login; making the bots anew gives all of them the Reborn talents.
+- **Talent templates of the bots**: the Reborn trees are the WotLK trees, so mod-playerbots' templates (tank, healer
+  and damage specializations, PvE and PvP) fit 22 of the 27 trees as they are. For the five Ascension changed -
+  Protection (Warrior), Subtlety, Holy (Priest), Enhancement and Arcane - the module puts the templates in their order
+  into playerbots.conf (`settings` in `afk-realm.json`); a point for a talent the Reborn tree lacks goes where the bot
+  sees fit. The bots play the classic classes with mod-playerbots' own class AI: it finds spells by their names, and the
+  Reborn copies carry the names of the stock spells.
 
 The talent points are those of CoA: 51 at level 60, as for the CoA classes. The spells come up to the level of the
 realm; with a level cap of 60 the ranks above 60 are never learned.

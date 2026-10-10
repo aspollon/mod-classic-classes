@@ -20,6 +20,162 @@
       "key": "AiPlayerbot.CoaClassesOnly",
       "value": "0",
       "why": "The random bots are created in the classic classes too, as far as ClassicClasses.Classes allows them."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.1.2.60",
+      "value": "--05335122500021052103013321",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.1.2.80",
+      "value": "3500030023-301-05335122500021052103013321",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.1.5.60",
+      "value": "--25003122022301252033213321",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.1.5.80",
+      "value": "0502300123-3-25003122022301252133213321",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.4.2.60",
+      "value": "--502201203032112135011503151",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.4.2.80",
+      "value": "30532010114--502201203032112135011503151",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.4.5.60",
+      "value": "--512021203032012133013322251",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.4.5.80",
+      "value": "3023031-3-512021203032012135013523251",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.5.0.80",
+      "value": "0503203130300512331323231251-003520103",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.5.1.60",
+      "value": "-00350500313011525300003313301",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.5.1.80",
+      "value": "05032031-20350500323021525300003313501",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.5.3.80",
+      "value": "5003203130322512331013231151-203050113",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.5.4.60",
+      "value": "-20355010310001524303200311501",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.5.4.80",
+      "value": "500320313-20355010310001525303200313501",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.7.1.60",
+      "value": "-3030500310502133303112131051",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.7.1.80",
+      "value": "053030152-3030500310502133303113131051",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.7.4.60",
+      "value": "-0230520310500133320113131151",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.7.4.80",
+      "value": "0503351-0230520310500133321113231251",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.0.60",
+      "value": "230000523310013015032031025003201",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.0.80",
+      "value": "230000523310013015032031025053201-03-203303001",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.1.80",
+      "value": "230000503010013-0055032012303330053120300351",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.2.80",
+      "value": "230002303010013--0533030313203100030152231351",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.4.60",
+      "value": "205032320012203210330031020152201",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.4.80",
+      "value": "205032320012203210330031020153201-23002-303020301",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.5.80",
+      "value": "2300321030122-2305212312020031223122301351",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
+    },
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.PremadeSpecLink.8.6.80",
+      "value": "230032103010203--3533203210203100232102231151",
+      "why": "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth)."
     }
   ],
   "bots": {

@@ -9,7 +9,9 @@
  *
  * - The stock talents of the classic tabs (ids below 100000) are taken out of their tab. CoA keeps them only for its
  *   own data - all piled on the first tier, with spells of their own - and a bot that took them would learn those
- *   instead of the Reborn talents beside them.
+ *   instead of the Reborn talents beside them. A Reborn talent that needs another one then names the Reborn one.
+ *   The Reborn trees are those of WotLK, so mod-playerbots' talent templates fit them; the five trees Ascension
+ *   changed get templates of their own (afk-realm.json, playerbots.conf).
  * - What a bot learns in the talent tree is written into its Character Advancement build as well, so that it can be
  *   inspected like a player and CoA keeps its talents.
  */
@@ -99,22 +101,34 @@ namespace
 class ClassicBotsWorld : public WorldScript
 {
 public:
-    ClassicBotsWorld() : WorldScript("ClassicBotsWorld", { WORLDHOOK_ON_STARTUP }) { }
+    ClassicBotsWorld() : WorldScript("ClassicBotsWorld", { WORLDHOOK_ON_BEFORE_WORLD_INITIALIZED }) { }
 
-    void OnStartup() override
+    /// Before mod-playerbots reads its talent templates (it does in the same hook, after this module, whose name
+    /// comes first): the templates count the talents of a tab in their order, which the stock pile would shift.
+    void OnBeforeWorldInitialized() override
     {
         active = false;
         spots.clear();
         if (!Enabled())
             return;
 
-        uint32 hidden = 0;
+        uint32 hidden = 0, linked = 0;
         for (TalentEntry const* talent : sTalentStore)
             if (talent && talent->TalentID < 100000 && CLASSIC_TABS.count(talent->TalentTab))
             {
                 const_cast<TalentEntry*>(talent)->TalentTab = 0;
                 ++hidden;
             }
+        // A Reborn talent that needs another names the stock one (Mortal Strike needs Sweeping Strikes 133); its Reborn
+        // copy is 110000 above it. A bot asked for the stock one would never get past it.
+        for (TalentEntry const* talent : sTalentStore)
+            if (talent && talent->TalentID >= 100000 && CLASSIC_TABS.count(talent->TalentTab) && talent->DependsOn && talent->DependsOn < 100000)
+                if (TalentEntry const* copy = sTalentStore.LookupEntry(talent->DependsOn + 110000))
+                    if (copy->TalentTab == talent->TalentTab)
+                    {
+                        const_cast<TalentEntry*>(talent)->DependsOn = copy->TalentID;
+                        ++linked;
+                    }
 
         AscensionFreepick::Catalog catalog;
         if (!AscensionFreepick::LoadCatalog(catalog))
@@ -136,8 +150,8 @@ public:
             }
         }
         active = true;
-        LOG_INFO("module", "mod-classic-classes: {} stock talent(s) of the classic tabs set aside, {} Reborn talent rank(s) known to the "
-            "bots' Character Advancement", hidden, spots.size());
+        LOG_INFO("module", "mod-classic-classes: {} stock talent(s) of the classic tabs set aside, {} Reborn talent(s) linked to the "
+            "Reborn talent they need, {} Reborn talent rank(s) known to the bots' Character Advancement", hidden, linked, spots.size());
     }
 };
 
