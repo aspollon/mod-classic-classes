@@ -29,6 +29,10 @@ This module brings both together:
 - **The game client** (`client/ClassicClasses.lua`): the class choice of the character creation shows the classic
   classes in a row of their own under the classes of CoA. The client otherwise shows either the one or the other.
 - **The talent trees** of the classic classes show the Reborn talents only, instead of the stock ones on top of them.
+- **The game's frames** (`client/ClassicClassesFrame.lua`): the client looks up the Reborn talents of a classic class
+  only while the player plays a classic class himself; a player of a CoA class who inspected a classic character saw
+  an empty build. The classic classes now always use the Reborn talents there. The Mystic Enchants tab of the
+  character frame and of the inspect frame is left out, as CoA does for its own classes.
 - **Talents of the bots** (`src/ClassicBots.cpp`): players pick the talents of a classic class in CoA's Character
   Advancement; mod-playerbots knows only the WotLK talent tree. The stock talents of the classic tabs, which CoA keeps
   piled on the first tier, are set aside on the server, so a bot learns the Reborn talents; and what a bot learns is
@@ -62,6 +66,9 @@ players the same patch.
 5. The client: an MPQ patch that loads after the client's own (for example `Data\patch-Y.MPQ`) with
    - `Interface\GlueXML\ClassicClasses.lua` from `client/`,
    - `Interface\GlueXML\GlueXML.toc` of your client with the line `ClassicClasses.lua` after `CharacterCreate.xml`,
+   - `Interface\FrameXML\ClassicClassesFrame.lua` from `client/`,
+   - `Interface\FrameXML\FrameXML.toc` of your client with the line `ClassicClassesFrame.lua` after
+     `Ascension_CharacterFrame\CharacterFrame.xml`,
    - `DBFilesClient\Talent.dbc` of your client without the talents below id 100000 of the classic talent tabs
      (the list is in `afk-realm.json`),
    - `DBFilesClient\CharBaseInfo.dbc` of your client with a row for every race and classic class pair it lacks

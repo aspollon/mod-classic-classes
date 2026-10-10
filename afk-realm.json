@@ -196,6 +196,10 @@
             "default": "1 2 3 4 5 7 8 9 11",
             "line": "local CLASSIC_CLASSES = {set} -- @CLASSES@"
           }
+        },
+        {
+          "from": "client/ClassicClassesFrame.lua",
+          "to": "Interface\\FrameXML\\ClassicClassesFrame.lua"
         }
       ],
       "edits": [
@@ -203,6 +207,11 @@
           "file": "Interface\\GlueXML\\GlueXML.toc",
           "insertAfter": "CharacterCreate.xml",
           "line": "ClassicClasses.lua"
+        },
+        {
+          "file": "Interface\\FrameXML\\FrameXML.toc",
+          "insertAfter": "Ascension_CharacterFrame\\CharacterFrame.xml",
+          "line": "ClassicClassesFrame.lua"
         },
         {
           "file": "DBFilesClient\\Talent.dbc",
@@ -256,6 +265,6 @@
         }
       ]
     },
-    "why": "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, every race can choose each of them, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them."
+    "why": "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, every race can choose each of them, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them. Inspecting a character of a classic class shows its Reborn build, and the Mystic Enchants tab of the character and inspect frames is left out."
   }
 }

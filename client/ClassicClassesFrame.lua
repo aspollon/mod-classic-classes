@@ -1,0 +1,65 @@
+-- mod-classic-classes: the classic classes in the game's interface (FrameXML).
+--
+-- 1. Talents. The server keeps the talents of the classic classes as the Reborn entries of Character Advancement (as on
+--    Ascension's Warcraft Reborn realms). The client maps a classic class to those entries only while the player
+--    himself plays a classic class; a player of a Conquest of Azeroth class would see the original entries instead,
+--    and a classic character he inspects would show an empty build. On this realm the classic classes always use the
+--    Reborn entries.
+-- 2. Mystic Enchants. The realm has no Mystic Enchants, so the side tab of the character frame and of the inspect
+--    frame that shows their slots is left out.
+
+if ClassConversions and ClassConversions.ClassDBCToFile then
+    local CLASSES = { "Hunter", "Warlock", "Priest", "Paladin", "Mage", "Rogue", "Druid", "Shaman", "Warrior", "DeathKnight" }
+    for _, name in ipairs(CLASSES) do
+        local file = string.upper(name)
+        ClassConversions.ClassDBCToFile["Reborn" .. name] = file
+        ClassConversions.ClassDBCToFile[name] = nil
+    end
+    ClassConversions.ClassFileToDBC = table.invert(ClassConversions.ClassDBCToFile)
+end
+
+local function HideTab(tab)
+    if tab then
+        tab:SetTabEnabled(false)
+        tab:Hide()
+    end
+end
+
+local function LeaveOutCharacterTab()
+    local frame = AscensionCharacterFrame
+    if frame and frame.EnchantSideTab then
+        HideTab(frame.EnchantSideTab)
+        frame.EnchantSideTab = nil
+    end
+end
+
+local function NoMysticEnchantTab(self)
+    HideTab(self.MysticEnchantTab)
+    if self.RightInset and self.StatsTab and self.RightInset:GetCurrentTabID() ~= self.StatsTab:GetTabID() then
+        self.RightInset:SelectTabID(self.StatsTab:GetTabID())
+    end
+end
+
+local function LeaveOutInspectTab()
+    if InspectFrameMixin then
+        InspectFrameMixin.UpdateMysticEnchantTab = NoMysticEnchantTab
+    end
+    local frame = AscensionInspectFrame
+    if frame and frame.UpdateMysticEnchantTab ~= NoMysticEnchantTab then
+        frame.UpdateMysticEnchantTab = NoMysticEnchantTab
+        HideTab(frame.MysticEnchantTab)
+        -- The class line of the inspect frame selects the tab when it is there; it no longer is.
+        hooksecurefunc(frame, "UpdateCharacterInfo", NoMysticEnchantTab)
+    end
+end
+
+LeaveOutCharacterTab()
+LeaveOutInspectTab()
+
+local watcher = CreateFrame("Frame")
+watcher:RegisterEvent("ADDON_LOADED")
+watcher:RegisterEvent("PLAYER_LOGIN")
+watcher:SetScript("OnEvent", function()
+    LeaveOutCharacterTab()
+    LeaveOutInspectTab()
+end)
