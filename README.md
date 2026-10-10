@@ -20,6 +20,10 @@ This module brings both together:
 - **Which classes** (`conf/mod_classic_classes.conf.dist`): `ClassicClasses.Classes` lists the classes that can be
   created; the others are added to the server's `CharacterCreating.Disabled.ClassMask`, which mod-playerbots honours
   for its random bots too. The Death Knight is never offered: his spells begin at 55.
+- **Every race, every classic class** (`data/sql/db-world`): a race and class pair the server had no start for gets
+  the start of its race and the starting action bars of its class - a Gnome Druid starts in Dun Morogh, a Tauren Mage
+  in Mulgore. The client patch adds the same pairs to the character creation (`CharBaseInfo.dbc`). The Hero (the
+  free-pick class) stays closed outside a free-pick realm, for players and bots.
 - **The game client** (`client/ClassicClasses.lua`): the class choice of the character creation shows the classic
   classes in a row of their own under the classes of CoA. The client otherwise shows either the one or the other.
 - **The talent trees** of the classic classes show the Reborn talents only, instead of the stock ones on top of them.
@@ -29,23 +33,26 @@ realm; with a level cap of 60 the ranks above 60 are never learned.
 
 ## Installation
 
-**With [AFK Realm](https://github.com/aspollon/AFK-Realm):** add the module. AFK Realm applies the two patches, sets
-`AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, builds the client patch from your own game client
-(`Data\patch-Y.MPQ`: the class choice and the talent table) and puts it into your game, and offers once to make the
-random bots anew so they come in the classic classes too. *Modules › Game client › Export as ZIP* gives the other
+**With [AFK Realm](https://github.com/aspollon/AFK-Realm)** (0.8.2 or newer): add the module. AFK Realm applies the
+two patches, sets `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, applies the SQL of the module, builds the client
+patch from your own game client (`Data\patch-Y.MPQ`: the class choice, the race and class pairs and the talent table)
+and puts it into your game, and offers once to make the random bots anew so they come in the classic classes too. *Modules › Game client › Export as ZIP* gives the other
 players the same patch.
 
 **By hand:**
 
 1. Clone the module into `modules/` and apply both patches in the core (`git apply modules/mod-classic-classes/patches/<patch>`).
 2. Rebuild, and copy `conf/mod_classic_classes.conf.dist` next to the other module configs as `mod_classic_classes.conf`.
-3. Set `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, and delete the random bots once
+3. Apply `data/sql/db-world/*.sql` to the world database (the core's updater does it for module SQL).
+4. Set `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, and delete the random bots once
    (`AiPlayerbot.DeleteRandomBotAccounts = 1` for one start).
-4. The client: an MPQ patch that loads after the client's own (for example `Data\patch-Y.MPQ`) with
+5. The client: an MPQ patch that loads after the client's own (for example `Data\patch-Y.MPQ`) with
    - `Interface\GlueXML\ClassicClasses.lua` from `client/`,
    - `Interface\GlueXML\GlueXML.toc` of your client with the line `ClassicClasses.lua` after `CharacterCreate.xml`,
    - `DBFilesClient\Talent.dbc` of your client without the talents below id 100000 of the classic talent tabs
-     (the list is in `afk-realm.json`).
+     (the list is in `afk-realm.json`),
+   - `DBFilesClient\CharBaseInfo.dbc` of your client with a row for every race and classic class pair it lacks
+     (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11).
 
 ## Status
 

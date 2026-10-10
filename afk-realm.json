@@ -55,9 +55,15 @@
             "field": 1,
             "values": [161, 163, 164, 381, 382, 383, 361, 362, 363, 181, 182, 183, 201, 202, 203, 261, 262, 263, 41, 61, 81, 301, 302, 303, 281, 282, 283]
           }
+        },
+        {
+          "file": "DBFilesClient\\CharBaseInfo.dbc",
+          "addRows": {
+            "cross": [[1, 2, 3, 4, 5, 6, 7, 8, 10, 11], [1, 2, 3, 4, 5, 7, 8, 9, 11]]
+          }
         }
       ]
     },
-    "why": "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them."
+    "why": "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, every race can choose each of them, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them."
   }
 }
