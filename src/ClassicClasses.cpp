@@ -11,7 +11,9 @@
 
 #include "Chat.h"
 #include "Config.h"
+#include "DatabaseEnv.h"
 #include "Log.h"
+#include "Player.h"
 #include "ScriptMgr.h"
 #include "SharedDefines.h"
 #include "StringConvert.h"
@@ -66,7 +68,7 @@ namespace
 class ClassicClassesWorld : public WorldScript
 {
 public:
-    ClassicClassesWorld() : WorldScript("ClassicClassesWorld", { WORLDHOOK_ON_AFTER_CONFIG_LOAD }) { }
+    ClassicClassesWorld() : WorldScript("ClassicClassesWorld", { WORLDHOOK_ON_AFTER_CONFIG_LOAD, WORLDHOOK_ON_STARTUP }) { }
 
     /// The core reads CharacterCreating.Disabled.ClassMask from worldserver.conf just before this; the classic classes
     /// not offered are added to it. mod-playerbots creates its random bots by the same mask.
@@ -76,9 +78,14 @@ public:
         bool const enabled = sConfigMgr->GetOption<bool>("ClassicClasses.Enable", true);
         uint32 const wanted = enabled ? Wanted() : 0;
         mask |= ALL_CLASSIC & ~wanted;
+        // The Hero (class 10) is the free-pick class of a realm with CoA.ClassModel = "hero". Elsewhere nobody can
+        // play him, and mod-playerbots, once it may create other classes than those of CoA, would make random bots
+        // of him that it cannot give talents to - the world server stops at the first of them.
+        std::string const model = sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa");
+        if (model != "hero")
+            mask |= Bit(CLASS_HERO);
         sWorld->setIntConfig(CONFIG_CHARACTER_CREATING_DISABLED_CLASSMASK, mask);
 
-        std::string const model = sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa");
         if (!enabled)
         {
             LOG_INFO("module", "mod-classic-classes: off - only the classes of Conquest of Azeroth can be created");
@@ -93,6 +100,36 @@ public:
             if (wanted & Bit(classId))
                 names += std::string(names.empty() ? "" : ", ") + Name(classId);
         LOG_INFO("module", "mod-classic-classes: classic classes next to Conquest of Azeroth: {}", names.empty() ? "none" : names);
+    }
+
+    /// Random bots of the Hero made before this module kept mod-playerbots from making them: removed before the bots
+    /// come into the world, since the first of them would stop the world server.
+    void OnStartup() override
+    {
+        if (sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa") == "hero")
+            return;
+        std::string const prefix = sConfigMgr->GetOption<std::string>("AiPlayerbot.RandomBotAccountPrefix", "rndbot");
+        if (prefix.empty())
+            return;
+        QueryResult accounts = LoginDatabase.Query("SELECT id FROM account WHERE username LIKE '{}%'", prefix);
+        if (!accounts)
+            return;
+        std::string ids;
+        do
+            ids += (ids.empty() ? "" : ",") + std::to_string((*accounts)[0].Get<uint32>());
+        while (accounts->NextRow());
+        QueryResult heroes = CharacterDatabase.Query("SELECT guid, account FROM characters WHERE class = {} AND account IN ({})",
+            uint32(CLASS_HERO), ids);
+        if (!heroes)
+            return;
+        uint32 removed = 0;
+        do
+        {
+            Field* fields = heroes->Fetch();
+            Player::DeleteFromDB(fields[0].Get<uint32>(), fields[1].Get<uint32>(), false, true);
+            ++removed;
+        } while (heroes->NextRow());
+        LOG_INFO("module", "mod-classic-classes: removed {} random bot(s) of the Hero class, which only a free-pick realm plays", removed);
     }
 };
 
