@@ -1,0 +1,63 @@
+{
+  "about": "Read by AFK Realm (https://github.com/aspollon/AFK-Realm) when it builds the server. Without AFK Realm, apply the patches, set these values by hand and build the client patch yourself: see README.md.",
+  "patches": [
+    {
+      "name": "Classic classes next to the classes of Conquest of Azeroth",
+      "target": "core",
+      "file": "patches/core-classic-classes.patch",
+      "why": "Conquest of Azeroth plays the classic classes with their Warcraft Reborn spells, trainers and talents only on a realm that offers nothing else. With this change a Conquest of Azeroth realm offers them too, as long as ClassicClasses.Enable is on."
+    },
+    {
+      "name": "Class scripts find the Reborn spells",
+      "target": "core",
+      "file": "patches/core-bronzebeard-lookups.patch",
+      "why": "The classic classes learn the Reborn copies of their spells, while the scripts of the classes ask for the original spells and auras. A question for an original that finds nothing asks for its copy as well."
+    }
+  ],
+  "settings": [
+    {
+      "file": "playerbots.conf",
+      "key": "AiPlayerbot.CoaClassesOnly",
+      "value": "0",
+      "why": "The random bots are created in the classic classes too, as far as ClassicClasses.Classes allows them."
+    }
+  ],
+  "bots": {
+    "reset": true,
+    "why": "The random bots that exist keep their classes. New ones, in the classic classes too, come only when the bots are made anew."
+  },
+  "client": {
+    "clearCache": true,
+    "patch": {
+      "files": [
+        {
+          "from": "client/ClassicClasses.lua",
+          "to": "Interface\\GlueXML\\ClassicClasses.lua",
+          "fill": {
+            "marker": "@CLASSES@",
+            "conf": "mod_classic_classes.conf",
+            "key": "ClassicClasses.Classes",
+            "default": "1 2 3 4 5 7 8 9 11",
+            "line": "local CLASSIC_CLASSES = {set} -- @CLASSES@"
+          }
+        }
+      ],
+      "edits": [
+        {
+          "file": "Interface\\GlueXML\\GlueXML.toc",
+          "insertAfter": "CharacterCreate.xml",
+          "line": "ClassicClasses.lua"
+        },
+        {
+          "file": "DBFilesClient\\Talent.dbc",
+          "dropRows": {
+            "idBelow": 100000,
+            "field": 1,
+            "values": [161, 163, 164, 381, 382, 383, 361, 362, 363, 181, 182, 183, 201, 202, 203, 261, 262, 263, 41, 61, 81, 301, 302, 303, 281, 282, 283]
+          }
+        }
+      ]
+    },
+    "why": "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them."
+  }
+}

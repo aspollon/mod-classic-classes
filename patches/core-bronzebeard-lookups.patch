@@ -1,0 +1,157 @@
+diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
+index f1b0bcc0..45ce7915 100644
+--- a/src/server/game/Entities/Player/Player.cpp
++++ b/src/server/game/Entities/Player/Player.cpp
+@@ -16,6 +16,7 @@
+  */
+ 
+ #include "Player.h"
++#include "AscensionSpellCopy.h"
+ #include "AccountMgr.h"
+ #include "AchievementMgr.h"
+ #include "AreaDefines.h"
+@@ -4261,19 +4262,28 @@ void Player::DestroyForPlayer(Player* target, bool onDeath) const
+ bool Player::HasSpell(uint32 spell) const
+ {
+     PlayerSpellMap::const_iterator itr = m_spells.find(spell);
+-    return (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->IsInSpec(m_activeSpec));
++    if (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->IsInSpec(m_activeSpec))
++        return true;
++    uint32 copy = GetAscensionSpellCopy(spell); // Bronzebeard copy (vanilla classes)
++    return copy && HasSpell(copy);
+ }
+ 
+ bool Player::HasTalent(uint32 spell, uint8 spec) const
+ {
+     PlayerTalentMap::const_iterator itr = m_talents.find(spell);
+-    return (itr != m_talents.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->IsInSpec(spec));
++    if (itr != m_talents.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->IsInSpec(spec))
++        return true;
++    uint32 copy = GetAscensionSpellCopy(spell); // Bronzebeard copy (vanilla classes)
++    return copy && HasTalent(copy, spec);
+ }
+ 
+ bool Player::HasActiveSpell(uint32 spell) const
+ {
+     PlayerSpellMap::const_iterator itr = m_spells.find(spell);
+-    return (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->Active && itr->second->IsInSpec(m_activeSpec));
++    if (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->Active && itr->second->IsInSpec(m_activeSpec))
++        return true;
++    uint32 copy = GetAscensionSpellCopy(spell); // Bronzebeard copy (vanilla classes)
++    return copy && HasActiveSpell(copy);
+ }
+ 
+ /**
+diff --git a/src/server/game/Entities/Unit/AscensionSpellCopy.h b/src/server/game/Entities/Unit/AscensionSpellCopy.h
+new file mode 100644
+index 00000000..73a2ce5b
+--- /dev/null
++++ b/src/server/game/Entities/Unit/AscensionSpellCopy.h
+@@ -0,0 +1,20 @@
++/*
++ * CoA repack: vanilla classes learn Ascension's Bronzebeard spells, which are copies of the stock WotLK spells
++ * at id + 1100000. Class scripts look up auras and spells by their stock ids (HasAura(SPELL_DRUID_...),
++ * GetAuraOfRankedSpell, HasSpell...), so a lookup of a stock id that finds nothing retries with the copy.
++ */
++
++#ifndef ASCENSION_SPELL_COPY_H
++#define ASCENSION_SPELL_COPY_H
++
++#include "Define.h"
++
++constexpr uint32 ASCENSION_BRONZEBEARD_SPELL_OFFSET = 1100000;
++
++/// Bronzebeard copy of a stock spell id, or 0 when the id is not a stock spell.
++inline uint32 GetAscensionSpellCopy(uint32 spellId)
++{
++    return (spellId && spellId < 100000) ? spellId + ASCENSION_BRONZEBEARD_SPELL_OFFSET : 0;
++}
++
++#endif
+diff --git a/src/server/game/Entities/Unit/Unit.cpp b/src/server/game/Entities/Unit/Unit.cpp
+index 58124a98..08e7981a 100644
+--- a/src/server/game/Entities/Unit/Unit.cpp
++++ b/src/server/game/Entities/Unit/Unit.cpp
+@@ -16,6 +16,7 @@
+  */
+ 
+ #include "Unit.h"
++#include "AscensionSpellCopy.h"
+ #include "AbstractFollower.h"
+ #include "AreaDefines.h"
+ #include "ArenaSpectator.h"
+@@ -5780,6 +5781,9 @@ void Unit::RemoveAppliedAuras(uint32 spellId, std::function<bool(AuraApplication
+ 
+ void Unit::RemoveAurasDueToSpell(uint32 spellId, ObjectGuid casterGUID, uint8 reqEffMask, AuraRemoveMode removeMode)
+ {
++    if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++        if (m_appliedAuras.find(spellId) == m_appliedAuras.end())
++            spellId = copy;
+     for (AuraApplicationMap::iterator iter = m_appliedAuras.lower_bound(spellId); iter != m_appliedAuras.upper_bound(spellId);)
+     {
+         Aura const* aura = iter->second->GetBase();
+@@ -6412,6 +6416,8 @@ AuraEffect* Unit::GetAuraEffect(uint32 spellId, uint8 effIndex, ObjectGuid caste
+             return itr->second->GetBase()->GetEffect(effIndex);
+         }
+     }
++    if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++        return GetAuraEffect(copy, effIndex, caster);
+     return nullptr;
+ }
+ 
+@@ -6466,6 +6472,8 @@ AuraEffect* Unit::GetAuraEffectDummy(uint32 spellid) const
+             return *itr;
+     }
+ 
++    if (uint32 copy = GetAscensionSpellCopy(spellid)) // Bronzebeard copy (vanilla classes)
++        return GetAuraEffectDummy(copy);
+     return nullptr;
+ }
+ 
+@@ -6491,6 +6499,9 @@ AuraApplication* Unit::GetAuraApplication(uint32 spellId, ObjectGuid casterGUID,
+ Aura* Unit::GetAura(uint32 spellId, ObjectGuid casterGUID, ObjectGuid itemCasterGUID, uint8 reqEffMask) const
+ {
+     AuraApplication* aurApp = GetAuraApplication(spellId, casterGUID, itemCasterGUID, reqEffMask);
++    if (!aurApp)
++        if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++            aurApp = GetAuraApplication(copy, casterGUID, itemCasterGUID, reqEffMask);
+     return aurApp ? aurApp->GetBase() : nullptr;
+ }
+ 
+@@ -6503,6 +6514,8 @@ AuraApplication* Unit::GetAuraApplicationOfRankedSpell(uint32 spellId, ObjectGui
+             return aurApp;
+         rankSpell = sSpellMgr->GetNextSpellInChain(rankSpell);
+     }
++    if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++        return GetAuraApplicationOfRankedSpell(copy, casterGUID, itemCasterGUID, reqEffMask, except);
+     return nullptr;
+ }
+ 
+@@ -6587,6 +6600,8 @@ bool Unit::HasAuraEffect(uint32 spellId, uint8 effIndex, ObjectGuid caster) cons
+             return true;
+         }
+     }
++    if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++        return HasAuraEffect(copy, effIndex, caster);
+     return false;
+ }
+ 
+@@ -6603,6 +6618,9 @@ uint32 Unit::GetAuraCount(uint32 spellId) const
+             count += (uint32)itr->second->GetBase()->GetStackAmount();
+     }
+ 
++    if (!count)
++        if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++            return GetAuraCount(copy);
+     return count;
+ }
+ 
+@@ -6663,6 +6681,8 @@ bool Unit::HasAura(uint32 spellId, ObjectGuid casterGUID, ObjectGuid itemCasterG
+ {
+     if (GetAuraApplication(spellId, casterGUID, itemCasterGUID, reqEffMask))
+         return true;
++    if (uint32 copy = GetAscensionSpellCopy(spellId)) // Bronzebeard copy (vanilla classes)
++        return GetAuraApplication(copy, casterGUID, itemCasterGUID, reqEffMask) != nullptr;
+     return false;
+ }
+ 

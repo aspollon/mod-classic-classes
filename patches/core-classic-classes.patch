@@ -1,0 +1,23 @@
+diff --git a/src/server/coa/AscensionFreepick.cpp b/src/server/coa/AscensionFreepick.cpp
+index ab379189..d75a6fb2 100644
+--- a/src/server/coa/AscensionFreepick.cpp
++++ b/src/server/coa/AscensionFreepick.cpp
+@@ -43,6 +43,9 @@ Realm ReadRealm()
+     std::string const model = sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa");
+     realm.ConquestOfAzeroth = model == "coa";
+     realm.WarcraftReborn = model == "wcr";
++    // mod-classic-classes: the classic classes, as Warcraft Reborn plays them, next to the classes of Conquest of Azeroth.
++    if (realm.ConquestOfAzeroth && sConfigMgr->GetOption<bool>("ClassicClasses.Enable", false, false))
++        realm.WarcraftReborn = true;
+     uint32 const maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
+     realm.Ruleset = maxLevel <= 60 ? 0 : maxLevel <= 70 ? 1 : 2;
+     return realm;
+@@ -450,7 +453,7 @@ public:
+         CurrentRealm = ReadRealm();
+         Classless = sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa") == "hero";
+         Reborn = CurrentRealm.WarcraftReborn;
+-        MysticAltars = (Classless || Reborn) &&
++        MysticAltars = (Classless || (Reborn && !CurrentRealm.ConquestOfAzeroth)) &&
+             !AscensionWildcard::PlaysWildcard(sConfigMgr->GetOption<std::string>("CoAChallenges.GameModes.Realm", ""));
+         if (CurrentRealm.ConquestOfAzeroth)
+             sGameEventMgr->StartInternalEvent(COA_CLASS_TRAINERS_EVENT);

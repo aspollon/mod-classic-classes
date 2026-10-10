@@ -1,0 +1,34 @@
+#
+# mod-classic-classes - the classic classes next to the classes of Conquest of Azeroth.
+#
+# Conquest of Azeroth plays the classic classes the way Ascension's Warcraft Reborn realms did: their Reborn spells
+# (the classic spells as Ascension tuned them for a world that ends at 60), their trainers, talents and summons. This
+# module lets a Conquest of Azeroth realm offer them next to its own classes. It needs its change to the core
+# (patches/core-classic-classes.patch, brought in by AFK Realm) and, in the game client of every player, its client
+# patch, which puts the classic classes on the class choice of the character creation.
+#
+[worldserver]
+
+#
+#    ClassicClasses.Enable
+#        Description: The classic classes can be created next to the classes of Conquest of Azeroth.
+#                     Off: only the classes of Conquest of Azeroth; characters of a classic class already made
+#                     keep playing. Needs a restart.
+#        Default:     1 - Enabled
+#                     0 - Disabled
+#
+
+ClassicClasses.Enable = 1
+
+#
+#    ClassicClasses.Classes
+#        Description: The classic classes that can be created, as class numbers separated by spaces:
+#                     1 Warrior, 2 Paladin, 3 Hunter, 4 Rogue, 5 Priest, 7 Shaman, 8 Mage, 9 Warlock, 11 Druid.
+#                     The Death Knight (6) is not playable: his spells begin at 55, and he would skip the world.
+#                     A class left out here is refused by the server; the class choice of the client still shows
+#                     it until its client patch is built again (AFK Realm does that when this file changes).
+#                     The random bots of mod-playerbots are created in the same classes.
+#        Default:     "1 2 3 4 5 7 8 9 11"
+#
+
+ClassicClasses.Classes = "1 2 3 4 5 7 8 9 11"
