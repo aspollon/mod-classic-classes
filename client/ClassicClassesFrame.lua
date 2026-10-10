@@ -8,14 +8,33 @@
 -- 2. Mystic Enchants. The realm has no Mystic Enchants, so the side tab of the character frame and of the inspect
 --    frame that shows their slots is left out.
 
-if ClassConversions and ClassConversions.ClassDBCToFile then
-    local CLASSES = { "Hunter", "Warlock", "Priest", "Paladin", "Mage", "Rogue", "Druid", "Shaman", "Warrior", "DeathKnight" }
-    for _, name in ipairs(CLASSES) do
-        local file = string.upper(name)
-        ClassConversions.ClassDBCToFile["Reborn" .. name] = file
-        ClassConversions.ClassDBCToFile[name] = nil
+-- The table of class names (ClassConversions) is local to Util\CharacterAdvancementUtil.lua, so the functions that read it
+-- are wrapped instead.
+if CharacterAdvancementUtil then
+    local REBORN, FILE = {}, {}
+    for _, name in ipairs({ "Hunter", "Warlock", "Priest", "Paladin", "Mage", "Rogue", "Druid", "Shaman", "Warrior", "DeathKnight" }) do
+        REBORN[string.upper(name)] = "Reborn" .. name
+        FILE["Reborn" .. name] = string.upper(name)
     end
-    ClassConversions.ClassFileToDBC = table.invert(ClassConversions.ClassDBCToFile)
+
+    local classDBCByFile = CharacterAdvancementUtil.GetClassDBCByFile
+    function CharacterAdvancementUtil.GetClassDBCByFile(classFile)
+        return REBORN[classFile] or classDBCByFile(classFile)
+    end
+
+    local classFileByDBC = CharacterAdvancementUtil.GetClassFileByDBC
+    function CharacterAdvancementUtil.GetClassFileByDBC(classDBC)
+        return FILE[classDBC] or classFileByDBC(classDBC)
+    end
+
+    local classFileForEntry = CharacterAdvancementUtil.GetClassFileForEntry
+    function CharacterAdvancementUtil.GetClassFileForEntry(entry)
+        local class, spec = classFileForEntry(entry)
+        if entry and FILE[entry.Class] then
+            class = FILE[entry.Class]
+        end
+        return class, spec
+    end
 end
 
 local function HideTab(tab)
