@@ -22,7 +22,9 @@ This module brings both together:
   for its random bots too. The Death Knight is never offered: his spells begin at 55.
 - **Every race, every classic class** (`data/sql/db-world`): a race and class pair the server had no start for gets
   the start of its race and the starting action bars of its class - a Gnome Druid starts in Dun Morogh, a Tauren Mage
-  in Mulgore. The client patch adds the same pairs to the character creation (`CharBaseInfo.dbc`). The Hero (the
+  in Mulgore. For these pairs CoA keeps only a showcase of high level armour as start outfit, without items; they get
+  the start outfit of their class and sex from another race of the same faction instead (the Orc Druid, who has none,
+  the Troll Druid's), on the server and in the character creation. The client patch adds the same pairs to the character creation (`CharBaseInfo.dbc`). The Hero (the
   free-pick class) stays closed outside a free-pick realm, for players and bots.
 - **The game client** (`client/ClassicClasses.lua`): the class choice of the character creation shows the classic
   classes in a row of their own under the classes of CoA. The client otherwise shows either the one or the other.
@@ -33,7 +35,7 @@ realm; with a level cap of 60 the ranks above 60 are never learned.
 
 ## Installation
 
-**With [AFK Realm](https://github.com/aspollon/AFK-Realm)** (0.8.3 or newer): add the module. AFK Realm applies the
+**With [AFK Realm](https://github.com/aspollon/AFK-Realm)** (0.8.4 or newer): add the module. AFK Realm applies the
 two patches, sets `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, applies the SQL of the module, builds the client
 patch from your own game client (`Data\patch-Y.MPQ`: the class choice, the race and class pairs and the talent table)
 and puts it into your game, and offers once to make the random bots anew so they come in the classic classes too. *Modules › Game client › Export as ZIP* gives the other
@@ -51,10 +53,12 @@ players the same patch.
    - `Interface\GlueXML\GlueXML.toc` of your client with the line `ClassicClasses.lua` after `CharacterCreate.xml`,
    - `DBFilesClient\Talent.dbc` of your client without the talents below id 100000 of the classic talent tabs
      (the list is in `afk-realm.json`),
-   - `DBFilesClient\CharBaseInfo.dbc` of your client without the Death Knight's rows and with a row for every race and
-     classic class pair it lacks (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11). The client
-     takes at most 31 classes for a race; with all 32 the character creation crashes, so the Death Knight, who cannot
-     be created next to the classic classes anyway, makes room.
+   - `DBFilesClient\CharBaseInfo.dbc` of your client with a row for every race and classic class pair it lacks
+     (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11). The client holds this table in a list
+     of about 300 rows and crashes in the character creation with more, so the rows of the Death Knight and the Hero
+     (neither can be created next to the classic classes) and a row the table has twice make room: 300 rows.
+   - `DBFilesClient\CharStartOutfit.dbc` of your client with an outfit for the Orc Druid (a copy of the Troll
+     Druid's), and the items of a sibling in the outfits CoA keeps only for show (see below).
 
 ## Status
 

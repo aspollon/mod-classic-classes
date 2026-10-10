@@ -60,13 +60,42 @@
           "file": "DBFilesClient\\CharBaseInfo.dbc",
           "dropRows": {
             "field": 1,
-            "values": [6]
+            "values": [6, 10]
           }
         },
         {
           "file": "DBFilesClient\\CharBaseInfo.dbc",
           "addRows": {
-            "cross": [[1, 2, 3, 4, 5, 6, 7, 8, 10, 11], [1, 2, 3, 4, 5, 7, 8, 9, 11]]
+            "cross": [[1, 2, 3, 4, 5, 6, 7, 8, 10, 11], [1, 2, 3, 4, 5, 7, 8, 9, 11]],
+            "maxRows": 300
+          }
+        },
+        {
+          "file": "DBFilesClient\\CharStartOutfit.dbc",
+          "cloneRows": {
+            "match": {
+              "4": 8,
+              "5": 11
+            },
+            "set": {
+              "4": 2
+            },
+            "key": [4, 5, 6]
+          }
+        },
+        {
+          "file": "DBFilesClient\\CharStartOutfit.dbc",
+          "fillRows": {
+            "match": {
+              "5": [1, 2, 3, 4, 5, 7, 8, 9, 11]
+            },
+            "empty": [8, 104],
+            "same": [5, 6],
+            "copy": [8, 296],
+            "prefer": {
+              "offset": 4,
+              "groups": [[1, 3, 4, 7, 11], [2, 5, 6, 8, 10]]
+            }
           }
         }
       ]
