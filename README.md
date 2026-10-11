@@ -72,9 +72,9 @@ players the same patch.
    - `DBFilesClient\Talent.dbc` of your client without the talents below id 100000 of the classic talent tabs
      (the list is in `afk-realm.json`),
    - `DBFilesClient\CharBaseInfo.dbc` of your client with a row for every race and classic class pair it lacks
-     (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11). The client holds this table in a list
-     of about 300 rows and crashes in the character creation with more, so the rows of the Death Knight and the Hero
-     (neither can be created next to the classic classes) and a row the table has twice make room: 300 rows.
+     (two bytes a row: race, class; races 1-8, 10, 11; classes 1-5, 7-9, 11). The character creation takes at most
+     30 classes for a race and crashes with more, so the rows of the Death Knight and the Hero (neither can be
+     created next to the classic classes) and a row the table has twice make room: 30 classes a race.
    - `DBFilesClient\CharStartOutfit.dbc` of your client with an outfit for the Orc Druid (a copy of the Troll
      Druid's), and the items of a sibling in the outfits CoA keeps only for show (see below).
 
