@@ -1,0 +1,18 @@
+{
+  "code": "zh-Hans",
+  "name": "简体中文",
+  "english": "",
+  "font": "",
+  "strings": {
+    "Classic classes next to the classes of Conquest of Azeroth": "经典职业与 Conquest of Azeroth 职业并存",
+    "Conquest of Azeroth plays the classic classes with their Warcraft Reborn spells, trainers and talents only on a realm that offers nothing else. With this change a Conquest of Azeroth realm offers them too, as long as ClassicClasses.Enable is on.": "Conquest of Azeroth 只在不提供其他职业的服务器上开放带有 Warcraft Reborn 法术、训练师和天赋的经典职业。有了这项修改，只要 ClassicClasses.Enable 开启，Conquest of Azeroth 服务器也会提供它们。",
+    "Class scripts find the Reborn spells": "职业脚本能找到 Reborn 法术",
+    "The classic classes learn the Reborn copies of their spells, while the scripts of the classes ask for the original spells and auras. A question for an original that finds nothing asks for its copy as well.": "经典职业学会的是其法术的 Reborn 副本，而职业脚本查询的是原始法术和光环。查询原始法术未果时，会再查询其副本。",
+    "The random bots are created in the classic classes too, as far as ClassicClasses.Classes allows them.": "随机机器人也会以经典职业创建，范围以 ClassicClasses.Classes 允许的为限。",
+    "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth).": "mod-playerbots 针对此专精的天赋模板，按照 Ascension 相对巫妖王之怒修改过的 Reborn 天赋树顺序排列（即 Conquest of Azeroth 上经典职业的天赋树）。",
+    "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, every race can choose each of them, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them. Inspecting a character of a classic class shows its Reborn build, and the Mystic Enchants tab of the character and inspect frames is left out.": "角色创建的职业选择界面会在 Conquest of Azeroth 职业下方显示经典职业，每个种族都能选择其中任意一个，其天赋树显示服务器传授的 Reborn 天赋，而不是覆盖在上面的原始天赋。观察经典职业角色时会显示其 Reborn 加点，角色和观察窗口中的神秘附魔标签页被去掉。",
+    "The random bots that exist keep their classes. New ones, in the classic classes too, come only when the bots are made anew.": "现有的随机机器人保留其职业。新的机器人（包括经典职业）只有在重新生成机器人时才会出现。",
+    "The classic classes can be created next to the classes of Conquest of Azeroth.\n    Off: only the classes of Conquest of Azeroth; characters of a classic class already made\n    keep playing. Needs a restart.\nDefault:     1 - Enabled\n    0 - Disabled": "可以在 Conquest of Azeroth 职业之外创建经典职业。\n    关闭：只有 Conquest of Azeroth 职业；已创建的经典职业角色\n    可以继续游戏。需要重启。\n默认：     1 - 开启\n    0 - 关闭",
+    "The classic classes that can be created, as class numbers separated by spaces:\n    1 Warrior, 2 Paladin, 3 Hunter, 4 Rogue, 5 Priest, 7 Shaman, 8 Mage, 9 Warlock, 11 Druid.\n    The Death Knight (6) is not playable: his spells begin at 55, and he would skip the world.\n    A class left out here is refused by the server; the class choice of the client still shows\n    it until its client patch is built again (AFK Realm does that when this file changes).\n    The random bots of mod-playerbots are created in the same classes.\nDefault:     \"1 2 3 4 5 7 8 9 11\"": "可以创建的经典职业，以空格分隔的职业编号表示：\n    1 战士、2 圣骑士、3 猎人、4 潜行者、5 牧师、7 萨满祭司、8 法师、9 术士、11 德鲁伊。\n    死亡骑士（6）不可玩：他的法术从 55 级开始，会跳过整个世界。\n    此处未列出的职业会被服务器拒绝；在客户端补丁重新生成之前，\n    客户端的职业选择界面仍会显示它（此文件改变时 AFK Realm 会重新生成）。\n    mod-playerbots 的随机机器人也以相同的职业创建。\n默认：     \"1 2 3 4 5 7 8 9 11\""
+  }
+}

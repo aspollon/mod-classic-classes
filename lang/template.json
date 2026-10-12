@@ -1,0 +1,18 @@
+{
+  "code": "template",
+  "name": "",
+  "english": "",
+  "font": "",
+  "strings": {
+    "Classic classes next to the classes of Conquest of Azeroth": "",
+    "Conquest of Azeroth plays the classic classes with their Warcraft Reborn spells, trainers and talents only on a realm that offers nothing else. With this change a Conquest of Azeroth realm offers them too, as long as ClassicClasses.Enable is on.": "",
+    "Class scripts find the Reborn spells": "",
+    "The classic classes learn the Reborn copies of their spells, while the scripts of the classes ask for the original spells and auras. A question for an original that finds nothing asks for its copy as well.": "",
+    "The random bots are created in the classic classes too, as far as ClassicClasses.Classes allows them.": "",
+    "The talent template of mod-playerbots for this specialization, in the order of the Reborn talent tree Ascension changed from WotLK's (the tree of the classic classes on Conquest of Azeroth).": "",
+    "The class choice of the character creation shows the classic classes under the classes of Conquest of Azeroth, every race can choose each of them, and their talent trees show the Reborn talents the server teaches instead of the originals on top of them. Inspecting a character of a classic class shows its Reborn build, and the Mystic Enchants tab of the character and inspect frames is left out.": "",
+    "The random bots that exist keep their classes. New ones, in the classic classes too, come only when the bots are made anew.": "",
+    "The classic classes can be created next to the classes of Conquest of Azeroth.\n    Off: only the classes of Conquest of Azeroth; characters of a classic class already made\n    keep playing. Needs a restart.\nDefault:     1 - Enabled\n    0 - Disabled": "",
+    "The classic classes that can be created, as class numbers separated by spaces:\n    1 Warrior, 2 Paladin, 3 Hunter, 4 Rogue, 5 Priest, 7 Shaman, 8 Mage, 9 Warlock, 11 Druid.\n    The Death Knight (6) is not playable: his spells begin at 55, and he would skip the world.\n    A class left out here is refused by the server; the class choice of the client still shows\n    it until its client patch is built again (AFK Realm does that when this file changes).\n    The random bots of mod-playerbots are created in the same classes.\nDefault:     \"1 2 3 4 5 7 8 9 11\"": ""
+  }
+}
