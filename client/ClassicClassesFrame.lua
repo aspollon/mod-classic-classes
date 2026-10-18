@@ -46,9 +46,22 @@ end
 
 local function LeaveOutCharacterTab()
     local frame = AscensionCharacterFrame
-    if frame and frame.EnchantSideTab then
-        HideTab(frame.EnchantSideTab)
-        frame.EnchantSideTab = nil
+    local tab = frame and frame.EnchantSideTab
+    if not tab then
+        return
+    end
+    frame.EnchantSideTab = nil
+    -- Hidden only, the tab came back whenever the frame showed its side tabs again (ShowTabs shows every tab it has),
+    -- so it is taken out of the frame's tabs altogether.
+    local tabs = frame.RightInset
+    if tabs and tabs.RemoveTab and tab.GetTabID then
+        local current = tabs.currentTab == tab
+        tabs:RemoveTab(tab:GetTabID())
+        if current and tabs.SelectFirstEnabledTab then
+            tabs:SelectFirstEnabledTab()
+        end
+    else
+        HideTab(tab)
     end
 end
 
