@@ -88,7 +88,7 @@ classes still need a look in the game.
 
 ## Credits
 
-- Conquest of Azeroth (jealous-sound/azerothcore-wotlk-coa) for its Warcraft Reborn classes.
+- Conquest of Azeroth (Conquest-of-AzerothCore/azerothcore-wotlk-coa) for its Warcraft Reborn classes.
 - ilusixn's CoA Custom (https://github.com/ilusixn/azerothcore-wotlk-coa), which showed the way: the lookup of the
   Reborn copies and the class choice of the client follow its work.
 
