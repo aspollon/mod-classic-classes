@@ -1,8 +1,8 @@
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
-index ab119f5..6c99a7b 100644
+index eb3ef4a3f..7b021be41 100644
 --- a/src/server/game/Entities/Player/Player.cpp
 +++ b/src/server/game/Entities/Player/Player.cpp
-@@ -4290,22 +4290,33 @@ void Player::DestroyForPlayer(Player* target, bool onDeath) const
+@@ -4295,10 +4295,15 @@ void Player::DestroyForPlayer(Player* target, bool onDeath) const
      }
  }
  
@@ -18,6 +18,8 @@ index ab119f5..6c99a7b 100644
 +    return copy && HasSpell(copy);
  }
  
+ bool Player::HasSpellOrTwin(uint32 spell) const
+@@ -4312,7 +4317,10 @@ bool Player::HasSpellOrTwin(uint32 spell) const
  bool Player::HasTalent(uint32 spell, uint8 spec) const
  {
      PlayerTalentMap::const_iterator itr = m_talents.find(spell);
@@ -28,20 +30,19 @@ index ab119f5..6c99a7b 100644
 +    return copy && HasTalent(copy, spec);
  }
  
- bool Player::HasActiveSpell(uint32 spell) const
- {
-     PlayerSpellMap::const_iterator itr = m_spells.find(spell);
--    return (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->Active && itr->second->IsInSpec(m_activeSpec));
-+    if (itr != m_spells.end() && itr->second->State != PLAYERSPELL_REMOVED && itr->second->Active && itr->second->IsInSpec(m_activeSpec))
-+        return true;
-+    uint32 copy = GetAscensionSpellCopy(spell); // Bronzebeard copy (vanilla classes)
-+    return copy && HasActiveSpell(copy);
+ bool Player::HasStoredActiveSpell(uint32 spell) const
+@@ -4349,6 +4357,8 @@ bool Player::HasActiveSpell(uint32 spell) const
+             if (HasStoredActiveSpell(rank->Id) && requested->GetRank() <= rank->GetRank())
+                 return true;
+     }
++    if (uint32 copy = GetAscensionSpellCopy(spell)) // Bronzebeard copy (vanilla classes)
++        return HasActiveSpell(copy);
+     return false;
  }
  
- /**
 diff --git a/src/server/game/Entities/Unit/AscensionSpellCopy.h b/src/server/game/Entities/Unit/AscensionSpellCopy.h
 new file mode 100644
-index 0000000..73a2ce5
+index 000000000..73a2ce5bb
 --- /dev/null
 +++ b/src/server/game/Entities/Unit/AscensionSpellCopy.h
 @@ -0,0 +1,20 @@
@@ -66,10 +67,10 @@ index 0000000..73a2ce5
 +
 +#endif
 diff --git a/src/server/game/Entities/Unit/Unit.cpp b/src/server/game/Entities/Unit/Unit.cpp
-index e2c2536..fec5d7d 100644
+index 91dad8523..384b8aa30 100644
 --- a/src/server/game/Entities/Unit/Unit.cpp
 +++ b/src/server/game/Entities/Unit/Unit.cpp
-@@ -5852,8 +5852,13 @@ void Unit::RemoveAppliedAuras(uint32 spellId, std::function<bool(AuraApplication
+@@ -5873,8 +5873,13 @@ void Unit::RemoveAppliedAuras(uint32 spellId, std::function<bool(AuraApplication
      }
  }
  
@@ -83,7 +84,7 @@ index e2c2536..fec5d7d 100644
      for (AuraApplicationMap::iterator iter = m_appliedAuras.lower_bound(spellId); iter != m_appliedAuras.upper_bound(spellId);)
      {
          Aura const* aura = iter->second->GetBase();
-@@ -6486,6 +6491,8 @@ AuraEffect* Unit::GetAuraEffect(uint32 spellId, uint8 effIndex, ObjectGuid caste
+@@ -6507,6 +6512,8 @@ AuraEffect* Unit::GetAuraEffect(uint32 spellId, uint8 effIndex, ObjectGuid caste
              return itr->second->GetBase()->GetEffect(effIndex);
          }
      }
@@ -92,7 +93,7 @@ index e2c2536..fec5d7d 100644
      return nullptr;
  }
  
-@@ -6540,6 +6547,8 @@ AuraEffect* Unit::GetAuraEffectDummy(uint32 spellid) const
+@@ -6561,6 +6568,8 @@ AuraEffect* Unit::GetAuraEffectDummy(uint32 spellid) const
              return *itr;
      }
  
@@ -101,7 +102,7 @@ index e2c2536..fec5d7d 100644
      return nullptr;
  }
  
-@@ -6565,6 +6574,9 @@ AuraApplication* Unit::GetAuraApplication(uint32 spellId, ObjectGuid casterGUID,
+@@ -6586,6 +6595,9 @@ AuraApplication* Unit::GetAuraApplication(uint32 spellId, ObjectGuid casterGUID,
  Aura* Unit::GetAura(uint32 spellId, ObjectGuid casterGUID, ObjectGuid itemCasterGUID, uint8 reqEffMask) const
  {
      AuraApplication* aurApp = GetAuraApplication(spellId, casterGUID, itemCasterGUID, reqEffMask);
@@ -111,7 +112,7 @@ index e2c2536..fec5d7d 100644
      return aurApp ? aurApp->GetBase() : nullptr;
  }
  
-@@ -6577,6 +6589,8 @@ AuraApplication* Unit::GetAuraApplicationOfRankedSpell(uint32 spellId, ObjectGui
+@@ -6598,6 +6610,8 @@ AuraApplication* Unit::GetAuraApplicationOfRankedSpell(uint32 spellId, ObjectGui
              return aurApp;
          rankSpell = sSpellMgr->GetNextSpellInChain(rankSpell);
      }
@@ -120,7 +121,7 @@ index e2c2536..fec5d7d 100644
      return nullptr;
  }
  
-@@ -6661,6 +6675,8 @@ bool Unit::HasAuraEffect(uint32 spellId, uint8 effIndex, ObjectGuid caster) cons
+@@ -6682,6 +6696,8 @@ bool Unit::HasAuraEffect(uint32 spellId, uint8 effIndex, ObjectGuid caster) cons
              return true;
          }
      }
@@ -129,7 +130,7 @@ index e2c2536..fec5d7d 100644
      return false;
  }
  
-@@ -6677,6 +6693,9 @@ uint32 Unit::GetAuraCount(uint32 spellId) const
+@@ -6698,6 +6714,9 @@ uint32 Unit::GetAuraCount(uint32 spellId) const
              count += (uint32)itr->second->GetBase()->GetStackAmount();
      }
  
@@ -139,7 +140,7 @@ index e2c2536..fec5d7d 100644
      return count;
  }
  
-@@ -6737,6 +6756,8 @@ bool Unit::HasAura(uint32 spellId, ObjectGuid casterGUID, ObjectGuid itemCasterG
+@@ -6758,6 +6777,8 @@ bool Unit::HasAura(uint32 spellId, ObjectGuid casterGUID, ObjectGuid itemCasterG
  {
      if (GetAuraApplication(spellId, casterGUID, itemCasterGUID, reqEffMask))
          return true;
