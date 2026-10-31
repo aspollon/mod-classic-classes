@@ -83,67 +83,9 @@ if CharCreateClassButtonMixin then
 	end
 end
 
-local function ClassicRow()
-	local container = CharCreateClassContainer
-	if not container.Row3 then
-		local row = CreateFrame("Frame", "CharCreateClassContainerRow3", container, "HorizontalLayoutFrame")
-		row:SetSize(800, 52)
-		row.layoutIndex = 3
-		row.spacing = 36
-		row.align = "center"
-		container.Row3 = row
-	end
-	return container.Row3
-end
-
-local showCoAClasses = CharacterCreate_ShowCoAClasses
-function CharacterCreate_ShowCoAClasses(self)
-	showCoAClasses(self)
-
-	local container = CharCreateClassContainer
-	local row = ClassicRow()
-	if CharacterCreate.classGuideActive or not container:IsShown() then
-		row:Hide()
-		return
-	end
-
-	local layoutIndex = 0
-	for _, token in ipairs(ORDER) do
-		local classID = Enum.Class[token]
-		if classID and CLASSIC_CLASSES[classID] then
-			local className, classFile = GetClassInfo(classID)
-			if className and classFile then
-				layoutIndex = layoutIndex + 1
-				local button = self.classButtonPool:Acquire()
-				button:SetID(classID)
-				button.layoutIndex = layoutIndex
-				button:SetParent(row)
-				button:Show()
-				button:SetClass(className, classFile, true)
-			end
-		end
-	end
-
-	row:SetShown(layoutIndex > 0)
-	container.spacing = layoutIndex > 0 and 20 or 42
-	row:MarkDirty()
-	container:MarkDirty()
-end
-
-
--- CoA's character creation shows this button again on every class refresh.
--- The AFK realm puts the classic classes in their own row, so the switch is not needed.
-local function HideCoAClassSwitch()
-	if CharCreateSwapClassesButton then
-		CharCreateSwapClassesButton:Hide()
-	end
-end
-HideCoAClassSwitch()
-if type(CharacterCreate_RefreshClassButtons) == "function" then
-	local refresh = CharacterCreate_RefreshClassButtons
-	CharacterCreate_RefreshClassButtons = function(self)
-		refresh(self)
-		HideCoAClassSwitch()
-	end
-end
+-- Keep the CoA class switch. It shows the CoA classes first and the classic classes
+-- after one click. The classic class IDs are the same IDs the server module and
+-- ClassicClassesFrame.lua use, so their Reborn spells and talents stay active.
+-- The switch itself is provided by the CoA client and must not be hidden; the old
+-- extra classic row is intentionally not created.
 
