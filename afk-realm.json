@@ -11,6 +11,7 @@
       "name": "Class scripts find the Reborn spells",
       "target": "core",
       "file": "patches/core-bronzebeard-lookups.patch",
+      "notNeededWhen": "src/server/game/Spells/SpellMgr.h|GetScriptTwinOf",
       "why": "The classic classes learn the Reborn copies of their spells, while the scripts of the classes ask for the original spells and auras. A question for an original that finds nothing asks for its copy as well."
     }
   ],

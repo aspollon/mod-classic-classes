@@ -19,6 +19,8 @@ This module brings both together:
 - **The scripts of the classes** (`patches/core-bronzebeard-lookups.patch`): the classic classes learn the Reborn
   copies of their spells (stock id + 1,100,000), while the scripts ask for the stock spells and auras. A question for a
   stock id that finds nothing asks for its copy as well.
+  The CoA core does this itself since November 2026 (its Reborn spells run their stock scripts as the Reborn spells,
+  `SpellMgr::GetScriptTwinOf`): there AFK Realm leaves this patch out quietly (`notNeededWhen` in `afk-realm.json`).
 - **Which classes** (`conf/mod_classic_classes.conf.dist`): `ClassicClasses.Classes` lists the classes that can be
   created; the others are added to the server's `CharacterCreating.Disabled.ClassMask`, which mod-playerbots honours
   for its random bots too. The Death Knight is never offered: his spells begin at 55.
