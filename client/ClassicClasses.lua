@@ -83,9 +83,74 @@ if CharCreateClassButtonMixin then
 	end
 end
 
--- Keep the CoA class switch. It shows the CoA classes first and the classic classes
--- after one click. The classic class IDs are the same IDs the server module and
--- ClassicClassesFrame.lua use, so their Reborn spells and talents stay active.
--- The switch itself is provided by the CoA client and must not be hidden; the old
--- extra classic row is intentionally not created.
+-- Two clients, two ways to reach the classic classes:
+-- * CoA Custom's character creation has a class switch (CharCreateSwapClassesButton, "Classic Classes" /
+--   "CoA Classes"). It shows when the realm offers both class sets; one click shows the classic classes. Where it
+--   is shown, it is all that is needed.
+-- * The plain CoA client has no such switch (or does not show it): the classic classes get a row of their own
+--   under the CoA classes, as before. Without it they could not be chosen at all without CoA Custom.
+-- The switch is checked on every class refresh, so the row appears only when the switch is not there.
 
+local function SwitchShown()
+	return CharCreateSwapClassesButton ~= nil and CharCreateSwapClassesButton:IsShown()
+end
+
+local function ClassicRow()
+	local container = CharCreateClassContainer
+	if not container.Row3 then
+		local row = CreateFrame("Frame", "CharCreateClassContainerRow3", container, "HorizontalLayoutFrame")
+		row:SetSize(800, 52)
+		row.layoutIndex = 3
+		row.spacing = 36
+		row.align = "center"
+		container.Row3 = row
+	end
+	return container.Row3
+end
+
+local showCoAClasses = CharacterCreate_ShowCoAClasses
+function CharacterCreate_ShowCoAClasses(self)
+	showCoAClasses(self)
+
+	local container = CharCreateClassContainer
+	local row = ClassicRow()
+	if SwitchShown() or CharacterCreate.classGuideActive or not container:IsShown() then
+		row:Hide()
+		container:MarkDirty()
+		return
+	end
+
+	local layoutIndex = 0
+	for _, token in ipairs(ORDER) do
+		local classID = Enum.Class[token]
+		if classID and CLASSIC_CLASSES[classID] then
+			local className, classFile = GetClassInfo(classID)
+			if className and classFile then
+				layoutIndex = layoutIndex + 1
+				local button = self.classButtonPool:Acquire()
+				button:SetID(classID)
+				button.layoutIndex = layoutIndex
+				button:SetParent(row)
+				button:Show()
+				button:SetClass(className, classFile, true)
+			end
+		end
+	end
+
+	row:SetShown(layoutIndex > 0)
+	container.spacing = layoutIndex > 0 and 20 or 42
+	row:MarkDirty()
+	container:MarkDirty()
+end
+
+-- The regular (classic) view of CoA Custom's switch does not use the row.
+if type(CharacterCreate_ShowRegularClasses) == "function" then
+	local showRegular = CharacterCreate_ShowRegularClasses
+	CharacterCreate_ShowRegularClasses = function(self, ...)
+		local container = CharCreateClassContainer
+		if container and container.Row3 then
+			container.Row3:Hide()
+		end
+		return showRegular(self, ...)
+	end
+end
