@@ -1,0 +1,128 @@
+diff --git a/src/Ai/Base/Actions/CoaWcrAction.cpp b/src/Ai/Base/Actions/CoaWcrAction.cpp
+index 84d3c78..fc72128 100644
+--- a/src/Ai/Base/Actions/CoaWcrAction.cpp
++++ b/src/Ai/Base/Actions/CoaWcrAction.cpp
+@@ -20,7 +20,7 @@ bool CoaWcrAction::Execute(Event event)
+ {
+     std::string const param = event.getParam();
+ 
+-    if (!IsRebornRealm())
++    if (!PlaysRebornClasses())
+     {
+         // Said once a bot, so that an add-on asking every bot does not flood its player.
+         static std::mutex lock;
+diff --git a/src/Ai/Class/Coa/CoaReborn.cpp b/src/Ai/Class/Coa/CoaReborn.cpp
+index 64e83f8..2c8d9f0 100644
+--- a/src/Ai/Class/Coa/CoaReborn.cpp
++++ b/src/Ai/Class/Coa/CoaReborn.cpp
+@@ -191,9 +191,9 @@ AscensionWarcraftReborn::Data const* RebornData()
+     static std::unique_ptr<AscensionWarcraftReborn::Data> const data = []
+     {
+         auto loaded = std::make_unique<AscensionWarcraftReborn::Data>();
+-        if (!IsRebornRealm() || !AscensionWarcraftReborn::LoadData(*loaded))
++        if (!PlaysRebornClasses() || !AscensionWarcraftReborn::LoadData(*loaded))
+         {
+-            if (IsRebornRealm())
++            if (PlaysRebornClasses())
+                 LOG_ERROR("playerbots", "coa wcr: the Warcraft Reborn tables did not load, bots train stock spells");
+             loaded.reset();
+         }
+@@ -336,6 +336,14 @@ bool IsRebornRealm()
+     return reborn;
+ }
+ 
++bool PlaysRebornClasses()
++{
++    // The core's own answer: true on a Warcraft Reborn realm, and on a Conquest of Azeroth realm that offers the
++    // classic classes next to its own (mod-classic-classes), whose characters it plays as Warcraft Reborn does.
++    static bool const reborn = IsRebornRealm() || CurrentRealm().WarcraftReborn;
++    return reborn;
++}
++
+ bool IsRebornClass(uint8 classId)
+ {
+     return classId >= CLASS_WARRIOR && classId <= CLASS_DRUID && classId != CLASS_HERO;
+@@ -343,12 +351,12 @@ bool IsRebornClass(uint8 classId)
+ 
+ bool IsRebornBot(Player const* player)
+ {
+-    return player && IsRebornRealm() && IsRebornClass(player->getClass());
++    return player && PlaysRebornClasses() && IsRebornClass(player->getClass());
+ }
+ 
+ uint32 RebornSpellId(uint32 spellId)
+ {
+-    return IsRebornRealm() ? AscensionWarcraftReborn::RebornSpell(spellId, &Exists) : spellId;
++    return PlaysRebornClasses() ? AscensionWarcraftReborn::RebornSpell(spellId, &Exists) : spellId;
+ }
+ 
+ bool KnowsSpellOrTwin(Player const* player, uint32 spellId)
+@@ -611,7 +619,7 @@ void EnsureWcrBuild(Player* bot)
+ 
+ bool SetWcrSpec(Player* bot, uint8 spec, std::string& error)
+ {
+-    if (!IsRebornRealm())
++    if (!PlaysRebornClasses())
+     {
+         error = "not a Warcraft Reborn realm";
+         return false;
+diff --git a/src/Ai/Class/Coa/CoaReborn.h b/src/Ai/Class/Coa/CoaReborn.h
+index 10b214f..03ea013 100644
+--- a/src/Ai/Class/Coa/CoaReborn.h
++++ b/src/Ai/Class/Coa/CoaReborn.h
+@@ -28,13 +28,17 @@ class Trainer;
+ // Whether this realm plays Warcraft Reborn (CoA.ClassModel = "wcr").
+ bool IsRebornRealm();
+ 
++// Whether characters of the original classes play as Warcraft Reborn: on a Warcraft Reborn realm, and on a Conquest
++// of Azeroth realm that offers the classic classes next to its own (mod-classic-classes).
++bool PlaysRebornClasses();
++
+ // One of the original classes (1 to 11, the Hero excepted).
+ bool IsRebornClass(uint8 classId);
+ 
+-// A character of an original class on a Warcraft Reborn realm.
++// A character of an original class where they play as Warcraft Reborn (PlaysRebornClasses).
+ bool IsRebornBot(Player const* player);
+ 
+-// The Reborn copy of a stock spell on a Warcraft Reborn realm when it exists, else the spell itself.
++// The Reborn copy of a stock spell where the original classes play as Warcraft Reborn, when it exists, else the spell itself.
+ uint32 RebornSpellId(uint32 spellId);
+ 
+ // The stock spell or its Reborn copy.
+diff --git a/src/Ai/Class/Coa/CoaSpecialization.cpp b/src/Ai/Class/Coa/CoaSpecialization.cpp
+index 8e1bf8d..e72ac54 100644
+--- a/src/Ai/Class/Coa/CoaSpecialization.cpp
++++ b/src/Ai/Class/Coa/CoaSpecialization.cpp
+@@ -728,7 +728,7 @@ namespace
+ // the tree of their Character Advancement build, which they change through the tree's build.
+ bool IsStockClass(uint8 classId)
+ {
+-    return IsRebornRealm() && IsRebornClass(classId);
++    return PlaysRebornClasses() && IsRebornClass(classId);
+ }
+ 
+ CoaRole StockRole(Player* bot)
+@@ -743,7 +743,8 @@ CoaRole RoleOfMember(Player* player)
+ 
+ bool ClassCanPlay(uint8 classId, CoaRole role)
+ {
+-    if (IsRebornRealm())
++    // A realm of the original classes only, or one of them next to the classes of CoA (mod-classic-classes).
++    if (IsRebornRealm() || IsStockClass(classId))
+         return WcrClassCanPlay(classId, role);
+     // A Wildcard Hero plays any role: a random one drafts a build of the role it is recruited for.
+     if (classId == CLASS_HERO && IsWildcardRealm())
+diff --git a/src/Script/PlayerbotCommandScript.cpp b/src/Script/PlayerbotCommandScript.cpp
+index 7797a9f..58a6401 100644
+--- a/src/Script/PlayerbotCommandScript.cpp
++++ b/src/Script/PlayerbotCommandScript.cpp
+@@ -245,7 +245,7 @@ public:
+ 
+     static void HandleCoaWcr(ChatHandler* handler, std::string const& args)
+     {
+-        if (!IsRebornRealm())
++        if (!PlaysRebornClasses())
+         {
+             handler->SendSysMessage("not a Warcraft Reborn realm");
+             return;

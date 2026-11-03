@@ -13,6 +13,13 @@
       "file": "patches/core-bronzebeard-lookups.patch",
       "notNeededWhen": "src/server/game/Spells/SpellMgr.h|GetScriptTwinOf",
       "why": "The classic classes learn the Reborn copies of their spells, while the scripts of the classes ask for the original spells and auras. A question for an original that finds nothing asks for its copy as well."
+    },
+    {
+      "name": "Bots of the classic classes play them as Warcraft Reborn",
+      "target": "mod-playerbots",
+      "file": "patches/mod-playerbots/classic-classes-play-reborn.patch",
+      "notNeededWhen": "src/Ai/Class/Coa/CoaReborn.cpp|bool PlaysRebornClasses()",
+      "why": "mod-playerbots plays the classic classes with their Reborn spells, trainers and Character Advancement builds only on a realm with CoA.ClassModel = \"wcr\". Next to the classes of Conquest of Azeroth its bots of the classic classes kept the first rank of their spells, trained stock spells the core does not give them and cast the few they had over and over. With this change they train the Reborn ranks, take the build of their tree and play its role wherever the core plays these classes as Warcraft Reborn."
     }
   ],
   "settings": [

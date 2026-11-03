@@ -48,6 +48,15 @@ This module brings both together:
   into playerbots.conf (`settings` in `afk-realm.json`); a point for a talent the Reborn tree lacks goes where the bot
   sees fit. The bots play the classic classes with mod-playerbots' own class AI: it finds spells by their names, and the
   Reborn copies carry the names of the stock spells.
+- **Spells, trainers and builds of the bots** (`patches/mod-playerbots/classic-classes-play-reborn.patch`):
+  mod-playerbots (CoA's fork) can play the classic classes as Warcraft Reborn - the Reborn ranks from the Reborn
+  trainers, the Reborn copies of the class spells, the Character Advancement build of a tree
+  (`playerbots_coa_wcr_builds`) and the role of that tree - but only on a realm with `CoA.ClassModel = "wcr"`. Next to
+  the CoA classes its bots of the classic classes kept rank 1 of their spells and cast the few they had over and over.
+  The patch turns that side of mod-playerbots on wherever the core plays these classes as Warcraft Reborn, so on a
+  CoA realm with `ClassicClasses.Enable` too; the bots of the CoA classes and the classes a random bot is created in
+  stay as they were. The build then comes from mod-playerbots; the talent templates above remain for a
+  mod-playerbots without the patch.
 
 The talent points are those of CoA: 51 at level 60, as for the CoA classes. The spells come up to the level of the
 realm; with a level cap of 60 the ranks above 60 are never learned.
@@ -55,14 +64,15 @@ realm; with a level cap of 60 the ranks above 60 are never learned.
 ## Installation
 
 **With [AFK Realm](https://github.com/aspollon/AFK-Realm)** (0.8.4 or newer): add the module. AFK Realm applies the
-two patches, sets `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, applies the SQL of the module, builds the client
+two core patches and the mod-playerbots patch, sets `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, applies the SQL of the module, builds the client
 patch from your own game client (`Data\patch-Y.MPQ`: the class choice, the race and class pairs and the talent table)
 and puts it into your game, and offers once to make the random bots anew so they come in the classic classes too. *Modules › Game client › Export as ZIP* gives the other
 players the same patch.
 
 **By hand:**
 
-1. Clone the module into `modules/` and apply both patches in the core (`git apply modules/mod-classic-classes/patches/<patch>`).
+1. Clone the module into `modules/` and apply both patches in the core (`git apply modules/mod-classic-classes/patches/<patch>`),
+   and `patches/mod-playerbots/classic-classes-play-reborn.patch` in `modules/mod-playerbots`.
 2. Rebuild, and copy `conf/mod_classic_classes.conf.dist` next to the other module configs as `mod_classic_classes.conf`.
 3. Apply `data/sql/db-world/*.sql` to the world database (the core's updater does it for module SQL).
 4. Set `AiPlayerbot.CoaClassesOnly = 0` in playerbots.conf, and delete the random bots once
