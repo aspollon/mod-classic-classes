@@ -20,6 +20,7 @@
 #include "Tokenize.h"
 #include "World.h"
 
+#include <algorithm>
 #include <set>
 #include <string>
 
@@ -63,7 +64,28 @@ namespace
             LOG_WARN("module", "mod-classic-classes: the Death Knight cannot be played - his spells begin at 55; left out");
         return mask & PLAYABLE;
     }
+
+    // Percent of their base health the classic classes get on top (ClassicClasses.BaseHealthBonus), read at config load.
+    uint32 healthBonus = 0;
+
+    // What CoA.ClassLevelSixtyStats gives the classes of Conquest of Azeroth at 60: a base health of 3440 on average
+    // (2917 to 4220, coa.bisbeard.com x1.2) where the classic classes have 1480 (1370 to 1689), so 130% more.
+    constexpr uint32 MATCHING_HEALTH_BONUS = 130;
 }
+
+/// The classes of Conquest of Azeroth got far more base health (CoA.ClassLevelSixtyStats in coa.conf); the classic
+/// classes get a share of their own base health on top, so they are not left behind, above all against players.
+class ClassicClassesHealth : public PlayerScript
+{
+public:
+    ClassicClassesHealth() : PlayerScript("ClassicClassesHealth", { PLAYERHOOK_ON_AFTER_UPDATE_MAX_HEALTH }) { }
+
+    void OnPlayerAfterUpdateMaxHealth(Player* player, float& value) override
+    {
+        if (healthBonus && player->getClass() <= CLASS_DRUID && (Bit(player->getClass()) & ALL_CLASSIC))
+            value += float(player->GetCreateHealth()) * float(healthBonus) / 100.0f;
+    }
+};
 
 class ClassicClassesWorld : public WorldScript
 {
@@ -85,6 +107,14 @@ public:
         if (model != "hero")
             mask |= Bit(CLASS_HERO);
         sWorld->setIntConfig(CONFIG_CHARACTER_CREATING_DISABLED_CLASSMASK, mask);
+
+        int32 const bonus = sConfigMgr->GetOption<int32>("ClassicClasses.BaseHealthBonus", -1);
+        if (bonus < 0)
+            healthBonus = sConfigMgr->GetOption<bool>("CoA.ClassLevelSixtyStats.Enable", false) ? MATCHING_HEALTH_BONUS : 0;
+        else
+            healthBonus = std::min<uint32>(uint32(bonus), 500);
+        if (healthBonus)
+            LOG_INFO("module", "mod-classic-classes: the classic classes have {}% more base health", healthBonus);
 
         if (!enabled)
         {
@@ -136,4 +166,5 @@ public:
 void AddSC_classic_classes()
 {
     new ClassicClassesWorld();
+    new ClassicClassesHealth();
 }

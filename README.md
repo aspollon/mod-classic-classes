@@ -21,6 +21,7 @@ This module brings both together:
   stock id that finds nothing asks for its copy as well.
   The CoA core does this itself since November 2026 (its Reborn spells run their stock scripts as the Reborn spells,
   `SpellMgr::GetScriptTwinOf`): there AFK Realm leaves this patch out quietly (`notNeededWhen` in `afk-realm.json`).
+- **Health** (`ClassicClasses.BaseHealthBonus`): Conquest of Azeroth gave its own classes far more base health (`CoA.ClassLevelSixtyStats.Enable` in coa.conf). The classic classes get 130% of their base health on top while that setting is on, so they keep up; any other percentage can be set.
 - **Which classes** (`conf/mod_classic_classes.conf.dist`): `ClassicClasses.Classes` lists the classes that can be
   created; the others are added to the server's `CharacterCreating.Disabled.ClassMask`, which mod-playerbots honours
   for its random bots too. The Death Knight is never offered: his spells begin at 55.

@@ -32,3 +32,18 @@ ClassicClasses.Enable = 1
 #
 
 ClassicClasses.Classes = "1 2 3 4 5 7 8 9 11"
+
+#
+#    ClassicClasses.BaseHealthBonus
+#        Description: More health for the classic classes, in percent of their base health (the health of the
+#                     class and level, without Stamina and gear). The classes of Conquest of Azeroth get far
+#                     more base health with CoA.ClassLevelSixtyStats.Enable = 1 in coa.conf: 3440 on average at
+#                     level 60, where the classic classes have 1480. 130 closes that gap (about 1900 to 2200
+#                     health at 60, less at lower levels). Read again by ".reload config"; a character shows it
+#                     after its next change of gear or login.
+#        Default:     -1 - follows coa.conf: 130 while CoA.ClassLevelSixtyStats.Enable is 1, else 0
+#                      0 - none
+#                      1 to 500 - this many percent
+#
+
+ClassicClasses.BaseHealthBonus = -1
