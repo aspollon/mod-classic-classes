@@ -24,7 +24,10 @@ This module brings both together:
 - **Health** (`ClassicClasses.BaseHealthBonus`): Conquest of Azeroth gave its own classes far more base health (`CoA.ClassLevelSixtyStats.Enable` in coa.conf). The classic classes get 130% of their base health on top while that setting is on, so they keep up; any other percentage can be set.
 - **Which classes** (`conf/mod_classic_classes.conf.dist`): `ClassicClasses.Classes` lists the classes that can be
   created; the others are added to the server's `CharacterCreating.Disabled.ClassMask`, which mod-playerbots honours
-  for its random bots too. The Death Knight is never offered: his spells begin at 55.
+  for its random bots too. The Death Knight (6) only with [mod-dk](https://github.com/dudemcbro/mod-dk), which starts
+him at level 1 with his own trainers, and with AFK64.exe (the 32-bit client's character creation holds 30 classes a race):
+his Reborn trainer stays out of the way, his talents come from Character Advancement, and the client patch adds his
+class to the creation, lets runes be forged on low-level weapons and shows his trainer levels.
 - **Every race, every classic class** (`data/sql/db-world`): a race and class pair the server had no start for gets
   the start of its race and the starting action bars of its class - a Gnome Druid starts in Dun Morogh, a Tauren Mage
   in Mulgore. For these pairs CoA keeps only a showcase of high level armour as start outfit, without items; they get

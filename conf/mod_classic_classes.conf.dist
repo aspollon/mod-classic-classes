@@ -24,7 +24,9 @@ ClassicClasses.Enable = 1
 #    ClassicClasses.Classes
 #        Description: The classic classes that can be created, as class numbers separated by spaces:
 #                     1 Warrior, 2 Paladin, 3 Hunter, 4 Rogue, 5 Priest, 7 Shaman, 8 Mage, 9 Warlock, 11 Druid.
-#                     The Death Knight (6) is not playable: his spells begin at 55, and he would skip the world.
+#                     6 Death Knight (experimental) only with the module mod-dk (dudemcbro/mod-dk), which
+#                     starts him at level 1 with his own trainers and runeforging from 20, and only with
+#                     AFK64.exe: the 32-bit client's character creation holds 30 classes a race.
 #                     A class left out here is refused by the server; the class choice of the client still shows
 #                     it until its client patch is built again (AFK Realm does that when this file changes).
 #                     The random bots of mod-playerbots are created in the same classes.

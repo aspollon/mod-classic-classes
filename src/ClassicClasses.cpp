@@ -5,8 +5,8 @@
  * Conquest of Azeroth plays the classic classes the way Ascension's Warcraft Reborn realms did - their Reborn spells,
  * trainers, talents and summons - but only on a realm that offers nothing else (CoA.ClassModel = "wcr"). The core
  * patch of this module (patches/core-classic-classes.patch) lets a Conquest of Azeroth realm offer them too, while
- * ClassicClasses.Enable is on. This file decides which of them can be created: the Death Knight never (his spells
- * begin at 55), the others as ClassicClasses.Classes says.
+ * ClassicClasses.Enable is on. This file decides which of them can be created, as ClassicClasses.Classes says. The
+ * Death Knight (6) only together with mod-dk, which starts him at level 1 with his own trainers.
  */
 
 #include "Chat.h"
@@ -28,10 +28,16 @@ namespace
 {
     constexpr uint32 Bit(uint32 classId) { return 1u << (classId - 1); }
 
-    // The classic classes a character can be created in: all of them but the Death Knight.
+    // The classic classes a character can be created in; the Death Knight only with mod-dk (DeathKnightReady).
     constexpr uint32 PLAYABLE = Bit(CLASS_WARRIOR) | Bit(CLASS_PALADIN) | Bit(CLASS_HUNTER) | Bit(CLASS_ROGUE) |
         Bit(CLASS_PRIEST) | Bit(CLASS_SHAMAN) | Bit(CLASS_MAGE) | Bit(CLASS_WARLOCK) | Bit(CLASS_DRUID);
     constexpr uint32 ALL_CLASSIC = PLAYABLE | Bit(CLASS_DEATH_KNIGHT);
+
+    // mod-dk is built in: its options are in the config (it starts him at level 1 and trains him to 60).
+    bool DeathKnightReady()
+    {
+        return sConfigMgr->GetOption<int32>("ModDk.StartLevel", -1, false) >= 0;
+    }
 
     char const* Name(uint32 classId)
     {
@@ -60,8 +66,10 @@ namespace
             if (Optional<uint32> classId = Acore::StringTo<uint32>(token))
                 if (*classId >= 1 && *classId <= 11 && (Bit(*classId) & ALL_CLASSIC))
                     mask |= Bit(*classId);
+        if ((mask & Bit(CLASS_DEATH_KNIGHT)) && DeathKnightReady())
+            return mask & ALL_CLASSIC;
         if (mask & Bit(CLASS_DEATH_KNIGHT))
-            LOG_WARN("module", "mod-classic-classes: the Death Knight cannot be played - his spells begin at 55; left out");
+            LOG_WARN("module", "mod-classic-classes: the Death Knight needs mod-dk (his spells begin at 55 without it); left out");
         return mask & PLAYABLE;
     }
 

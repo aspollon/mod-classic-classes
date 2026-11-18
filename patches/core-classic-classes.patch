@@ -1,8 +1,8 @@
 diff --git a/src/server/coa/AscensionFreepick.cpp b/src/server/coa/AscensionFreepick.cpp
-index ab379189..d75a6fb2 100644
+index e6d629d8..ae25602b 100644
 --- a/src/server/coa/AscensionFreepick.cpp
 +++ b/src/server/coa/AscensionFreepick.cpp
-@@ -43,6 +43,9 @@ Realm ReadRealm()
+@@ -49,6 +49,9 @@ Realm ReadRealm()
      std::string const model = sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa");
      realm.ConquestOfAzeroth = model == "coa";
      realm.WarcraftReborn = model == "wcr";
@@ -12,7 +12,7 @@ index ab379189..d75a6fb2 100644
      uint32 const maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
      realm.Ruleset = maxLevel <= 60 ? 0 : maxLevel <= 70 ? 1 : 2;
      return realm;
-@@ -450,7 +453,7 @@ public:
+@@ -573,7 +576,7 @@ public:
          CurrentRealm = ReadRealm();
          Classless = sConfigMgr->GetOption<std::string>("CoA.ClassModel", "coa") == "hero";
          Reborn = CurrentRealm.WarcraftReborn;
@@ -21,3 +21,17 @@ index ab379189..d75a6fb2 100644
              !AscensionWildcard::PlaysWildcard(sConfigMgr->GetOption<std::string>("CoAChallenges.GameModes.Realm", ""));
          if (CurrentRealm.ConquestOfAzeroth)
              sGameEventMgr->StartInternalEvent(COA_CLASS_TRAINERS_EVENT);
+diff --git a/src/server/coa/AscensionWarcraftReborn.cpp b/src/server/coa/AscensionWarcraftReborn.cpp
+index 90a0cf43..8e131450 100644
+--- a/src/server/coa/AscensionWarcraftReborn.cpp
++++ b/src/server/coa/AscensionWarcraftReborn.cpp
+@@ -194,7 +194,8 @@ void BuildTrainers()
+     for (auto const& [trainerId, trainer] : sObjectMgr->GetTrainers())
+     {
+         uint32 const classId = trainer.GetTrainerRequirement();
+-        if (trainer.GetTrainerType() != Trainer::Type::Class || !StockClass(classId))
++        // The Death Knight's own trainer (mod-dk) keeps its spells and levels 1 to 60; Reborn knows none below 55.
++        if (trainer.GetTrainerType() != Trainer::Type::Class || !StockClass(classId) || classId == CLASS_DEATH_KNIGHT)
+             continue;
+ 
+         std::vector<TrainerSpell> stock;
