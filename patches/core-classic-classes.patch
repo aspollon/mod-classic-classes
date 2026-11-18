@@ -1,3 +1,18 @@
+diff --git a/src/server/coa/AscensionCompat.cpp b/src/server/coa/AscensionCompat.cpp
+index 7a8042f5..ca127eb6 100644
+--- a/src/server/coa/AscensionCompat.cpp
++++ b/src/server/coa/AscensionCompat.cpp
+@@ -10188,8 +10188,9 @@ public:
+       return std::nullopt;
+ 
+     Classes actualClass = Classes(player->getClass());
++    // No answer for the own class: the core says yes anyway, and modules after this one may say no (mod-classic-classes' Death Knight leaving Ebon Hold).
+     if (actualClass == playerClass)
+-      return true;
++      return std::nullopt;
+ 
+     if (actualClass < CLASS_BARBARIAN || actualClass > CLASS_SPIRIT_MAGE)
+       return std::nullopt;
 diff --git a/src/server/coa/AscensionFreepick.cpp b/src/server/coa/AscensionFreepick.cpp
 index e6d629d8..ae25602b 100644
 --- a/src/server/coa/AscensionFreepick.cpp
