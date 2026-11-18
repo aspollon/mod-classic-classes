@@ -828,7 +828,8 @@ namespace
 
             if (_sawCinematic)
             {
-                if (cm->IsOnCinematic() || activeCamera)
+                // A client that never reports the end of the intro (CoA's) would keep him in Ebon Hold: two minutes at most.
+                if ((cm->IsOnCinematic() || activeCamera) && GetMSTimeDiffToNow(_startMs) < 120000)
                 {
                     Reschedule(player);
                     return true;
