@@ -37,10 +37,20 @@ index e6d629d8..ae25602b 100644
          if (CurrentRealm.ConquestOfAzeroth)
              sGameEventMgr->StartInternalEvent(COA_CLASS_TRAINERS_EVENT);
 diff --git a/src/server/coa/AscensionWarcraftReborn.cpp b/src/server/coa/AscensionWarcraftReborn.cpp
-index 90a0cf43..8e131450 100644
+index 90a0cf43..16338d71 100644
 --- a/src/server/coa/AscensionWarcraftReborn.cpp
 +++ b/src/server/coa/AscensionWarcraftReborn.cpp
-@@ -194,7 +194,8 @@ void BuildTrainers()
+@@ -34,7 +34,8 @@ bool StockClass(uint32 classId)
+ 
+ bool IsRebornPlayer(Player const* player)
+ {
+-    return RebornRealm && StockClass(player->getClass());
++    // mod-classic-classes' Death Knight (after mod-dk) plays his stock spells from level 1, not the Reborn ones from 55.
++    return RebornRealm && StockClass(player->getClass()) && player->getClass() != CLASS_DEATH_KNIGHT;
+ }
+ 
+ bool Exists(uint32 spellId)
+@@ -194,7 +195,8 @@ void BuildTrainers()
      for (auto const& [trainerId, trainer] : sObjectMgr->GetTrainers())
      {
          uint32 const classId = trainer.GetTrainerRequirement();
