@@ -5,14 +5,17 @@
 --    himself plays a classic class; a player of a Conquest of Azeroth class would see the original entries instead,
 --    and a classic character he inspects would show an empty build. On this realm the classic classes always use the
 --    Reborn entries.
--- 2. Mystic Enchants. The realm has no Mystic Enchants, so the side tab of the character frame and of the inspect
---    frame that shows their slots is left out.
+-- 2. Mystic Enchants. The realm has no Mystic Enchants (only Warcraft Reborn realms do), so the side tab of the
+--    character frame, the inspect frame and the Collections window are left out.
+--
+-- The Death Knight is not part of that list: mod-dk plays his stock WotLK spells and Character Advancement tree, not
+-- the Reborn entries (which have no Death Knight).
 
 -- The table of class names (ClassConversions) is local to Util\CharacterAdvancementUtil.lua, so the functions that read it
 -- are wrapped instead.
 if CharacterAdvancementUtil then
     local REBORN, FILE = {}, {}
-    for _, name in ipairs({ "Hunter", "Warlock", "Priest", "Paladin", "Mage", "Rogue", "Druid", "Shaman", "Warrior", "DeathKnight" }) do
+    for _, name in ipairs({ "Hunter", "Warlock", "Priest", "Paladin", "Mage", "Rogue", "Druid", "Shaman", "Warrior" }) do
         REBORN[string.upper(name)] = "Reborn" .. name
         FILE["Reborn" .. name] = string.upper(name)
     end
@@ -85,8 +88,42 @@ local function LeaveOutInspectTab()
     end
 end
 
+-- The Collections window (Character Advancement, Vanity, ...) has its own Mystic Enchant tab. CoA has no Mystic
+-- Enchants; only Warcraft Reborn realms do. The tab is added for non-custom classes, so a Death Knight would still
+-- get it; take it out of the tab system altogether.
+local function RemoveCollectionsMysticTab(frame)
+    local tabs = frame and frame.Tabs
+    local id = tabs and tabs.MysticEnchants
+    if not id then
+        return
+    end
+    tabs.MysticEnchants = nil
+    if frame.RemoveTab then
+        frame:RemoveTab(id)
+    elseif frame.GetTabByID then
+        local tab = frame:GetTabByID(id)
+        if tab then
+            tab:SetTabEnabled(false)
+            tab:Hide()
+        end
+    end
+end
+
+local function LeaveOutCollectionsTab()
+    if CollectionsMixin and CollectionsMixin.SetupTabSystem and not CollectionsMixin.classicClassesNoMystic then
+        CollectionsMixin.classicClassesNoMystic = true
+        hooksecurefunc(CollectionsMixin, "SetupTabSystem", function(self)
+            RemoveCollectionsMysticTab(self)
+        end)
+    end
+
+    RemoveCollectionsMysticTab(_G.CollectionsFrame)
+    RemoveCollectionsMysticTab(_G.AscensionCollectionsFrame)
+end
+
 LeaveOutCharacterTab()
 LeaveOutInspectTab()
+LeaveOutCollectionsTab()
 
 local watcher = CreateFrame("Frame")
 watcher:RegisterEvent("ADDON_LOADED")
@@ -94,4 +131,5 @@ watcher:RegisterEvent("PLAYER_LOGIN")
 watcher:SetScript("OnEvent", function()
     LeaveOutCharacterTab()
     LeaveOutInspectTab()
+    LeaveOutCollectionsTab()
 end)

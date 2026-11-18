@@ -60,3 +60,19 @@ index 90a0cf43..16338d71 100644
              continue;
  
          std::vector<TrainerSpell> stock;
+diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
+--- a/src/server/game/Entities/Player/Player.cpp
++++ b/src/server/game/Entities/Player/Player.cpp
+@@ -13489,7 +13489,12 @@ bool Player::LendsSkillLine(uint32 skillLine) const
+ {
++    // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight's skill lines, so the
++    // trainer and the Book of Ascension hide every DK spell (only unrestricted mounts pass the fit test).
++    if (getClass() == CLASS_DEATH_KNIGHT && (skillLine == 770 || skillLine == 771 || skillLine == 772 || skillLine == 776))
++        return true;
++
+     for (uint8 classId = CLASS_WARRIOR; classId < MAX_CLASSES; ++classId)
+         if (classId != getClass() && IsClass(Classes(classId), CLASS_CONTEXT_ABILITY) &&
+             GetSkillRaceClassInfo(skillLine, getRace(), classId))
+             return true;
+     return false;
+ }
