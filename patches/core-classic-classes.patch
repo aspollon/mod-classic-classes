@@ -63,16 +63,13 @@ index 90a0cf43..16338d71 100644
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
 --- a/src/server/game/Entities/Player/Player.cpp
 +++ b/src/server/game/Entities/Player/Player.cpp
-@@ -13489,7 +13489,12 @@ bool Player::LendsSkillLine(uint32 skillLine) const
- {
-+    // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight's skill lines, so the
-+    // trainer and the Book of Ascension hide every DK spell (only unrestricted mounts pass the fit test).
-+    if (getClass() == CLASS_DEATH_KNIGHT && (skillLine == 770 || skillLine == 771 || skillLine == 772 || skillLine == 776))
-+        return true;
-+
-     for (uint8 classId = CLASS_WARRIOR; classId < MAX_CLASSES; ++classId)
-         if (classId != getClass() && IsClass(Classes(classId), CLASS_CONTEXT_ABILITY) &&
-             GetSkillRaceClassInfo(skillLine, getRace(), classId))
-             return true;
-     return false;
- }
+@@ -13343,5 +13343,8 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
+         // skip wrong class and race skill saved in SkillRaceClassInfo.dbc
+-        if (!GetSkillRaceClassInfo(_spell_idx->second->SkillLine, getRace(), getClass()))
++        // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight skill lines; without
++        // this the DK trainer and the Book of Ascension hide every DK spell (only unrestricted mounts pass).
++        if (!GetSkillRaceClassInfo(_spell_idx->second->SkillLine, getRace(), getClass()) &&
++            !(getClass() == CLASS_DEATH_KNIGHT && (_spell_idx->second->SkillLine == 770 || _spell_idx->second->SkillLine == 771 || _spell_idx->second->SkillLine == 772 || _spell_idx->second->SkillLine == 776)))
+             continue;
+ 
+         return true;
