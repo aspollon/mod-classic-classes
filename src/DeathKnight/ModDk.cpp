@@ -236,6 +236,25 @@ namespace
         return (race == RACE_BLOODELF || race == RACE_DRAENEI) ? 2 : 1;
     }
 
+    // The stock start of the race: warrior/paladin for the standard races, but a custom race may only have a
+    // playercreateinfo row for another class. Take the first class that has one, so the Ebon Hold exit works for
+    // every custom race too.
+    PlayerInfo const* FindRacialStart(uint8 race)
+    {
+        if (PlayerInfo const* info = sObjectMgr->GetPlayerInfo(race, GetRacialStartClass(race)))
+            return info;
+
+        for (uint8 classId = 1; classId < MAX_CLASSES; classId++)
+        {
+            if (classId == CLASS_DEATH_KNIGHT)
+                continue;
+            if (PlayerInfo const* info = sObjectMgr->GetPlayerInfo(race, classId))
+                return info;
+        }
+
+        return nullptr;
+    }
+
     // Player::GetCinematicMgr() returns a pointer on older cores and a reference on
     // current AzerothCore; only one of the two is used on a given core.
     [[maybe_unused]] CinematicMgr* AsCinematicMgr(CinematicMgr* cm)
@@ -744,8 +763,7 @@ namespace
             return;
 
         uint8 race = player->getRace();
-        uint8 startClass = GetRacialStartClass(race);
-        PlayerInfo const* info = sObjectMgr->GetPlayerInfo(race, startClass);
+        PlayerInfo const* info = FindRacialStart(race);
         if (!info)
             return;
 
@@ -760,9 +778,8 @@ namespace
             return false;
 
         uint8 race = player->getRace();
-        uint8 startClass = GetRacialStartClass(race);
 
-        PlayerInfo const* info = sObjectMgr->GetPlayerInfo(race, startClass);
+        PlayerInfo const* info = FindRacialStart(race);
 
         if (!info)
             return false;
