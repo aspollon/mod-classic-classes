@@ -153,6 +153,21 @@ if type(CharacterCreate_ShowRegularClasses) == "function" then
 		if container and container.Row3 then
 			container.Row3:Hide()
 		end
-		return showRegular(self, ...)
+		local result = showRegular(self, ...)
+		-- CoA Custom leaves the Death Knight out of this row; with mod-classic-classes he sits after the Priest.
+		if CLASSIC_CLASSES[6] and container and container.Row1 and self.classButtonPool then
+			local className, classFile = GetClassInfo(6)
+			if className and classFile then
+				local button = self.classButtonPool:Acquire()
+				button:SetID(6)
+				button.layoutIndex = 5.5
+				button:SetParent(container.Row1)
+				button:Show()
+				button:SetClass(className, classFile, true)
+				container.Row1:MarkDirty()
+				container:MarkDirty()
+			end
+		end
+		return result
 	end
 end
