@@ -712,6 +712,11 @@ namespace
         if (!IsDk(player))
             return false;
 
+        // Level 1 DKs start at their racial start now (2026_11_18_18); only a DK still in Acherus takes the
+        // cinematic exit.
+        if (player->GetMapId() != MAP_ACHERUS)
+            return false;
+
         // StartHeroicPlayerLevel 55 (stock) plays the normal Ebon Hold intro instead.
         if (player->GetLevel() >= DK_EBON_HOLD_MIN_LEVEL)
             return false;
