@@ -4,7 +4,7 @@
 -- the realm offers into CLASSIC_CLASSES below.
 
 local CLASSIC_CLASSES = { [1] = true, [2] = true, [3] = true, [4] = true, [5] = true, [7] = true, [8] = true, [9] = true, [11] = true } -- @CLASSES@
-local ORDER = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "SHAMAN", "MAGE", "WARLOCK", "DRUID" }
+local ORDER = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT", "SHAMAN", "MAGE", "WARLOCK", "DRUID" }
 
 -- The AFK Realm badge belongs to the login wallpaper, not to the whole glue UI.
 -- Parented to AccountLogin it disappears with the login screen and never sits over
@@ -137,6 +137,8 @@ function CharacterCreate_ShowCoAClasses(self)
 		end
 	end
 
+	-- Ten buttons (with the Death Knight) fit the row only a little closer together.
+	row.spacing = layoutIndex > 9 and 24 or 36
 	row:SetShown(layoutIndex > 0)
 	container.spacing = layoutIndex > 0 and 20 or 42
 	row:MarkDirty()
