@@ -47,8 +47,7 @@ local function HideTab(tab)
     end
 end
 
-local function LeaveOutCharacterTab()
-    local frame = AscensionCharacterFrame
+local function RemoveCharacterEnchantTab(frame)
     local tab = frame and frame.EnchantSideTab
     if not tab then
         return
@@ -66,6 +65,25 @@ local function LeaveOutCharacterTab()
     else
         HideTab(tab)
     end
+end
+
+-- CoA adds the tab again for the classes that are not its own (the Death Knight among them) whenever it shows the
+-- side tabs, so the removal runs again after each of those.
+local function LeaveOutCharacterTab()
+    local frame = AscensionCharacterFrame
+    if not frame then
+        return
+    end
+    if not frame.classicClassesNoEnchantTab then
+        frame.classicClassesNoEnchantTab = true
+        if frame.ShowTabs then
+            hooksecurefunc(frame, "ShowTabs", RemoveCharacterEnchantTab)
+        end
+        if frame.UpdateCharacterInfo then
+            hooksecurefunc(frame, "UpdateCharacterInfo", RemoveCharacterEnchantTab)
+        end
+    end
+    RemoveCharacterEnchantTab(frame)
 end
 
 local function NoMysticEnchantTab(self)
