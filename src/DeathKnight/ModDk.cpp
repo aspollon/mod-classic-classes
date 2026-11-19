@@ -859,7 +859,8 @@ namespace
             }
             else
             {
-                if (GetMSTimeDiffToNow(_startMs) < 10000)
+                // The intro video plays without the server seeing a cinematic: wait for it to finish before the exit.
+                if (GetMSTimeDiffToNow(_startMs) < 120000)
                 {
                     Reschedule(player);
                     return true;
