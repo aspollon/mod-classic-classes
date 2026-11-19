@@ -201,7 +201,7 @@
             "marker": "@CLASSES@",
             "conf": "mod_classic_classes.conf",
             "key": "ClassicClasses.Classes",
-            "default": "1 2 3 4 5 7 8 9 11",
+            "default": "1 2 3 4 5 6 7 8 9 11",
             "line": "local CLASSIC_CLASSES = {set} -- @CLASSES@"
           }
         },
@@ -253,7 +253,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "addRows": {
@@ -271,7 +271,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -287,7 +287,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -303,7 +303,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -319,7 +319,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -335,7 +335,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -351,7 +351,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -367,7 +367,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -383,7 +383,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -399,7 +399,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -415,7 +415,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -431,7 +431,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -446,7 +446,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -461,7 +461,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -476,7 +476,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -491,7 +491,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -506,7 +506,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -521,7 +521,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -536,7 +536,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -551,7 +551,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -566,7 +566,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -581,7 +581,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -596,7 +596,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -611,7 +611,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -626,7 +626,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -641,7 +641,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -656,7 +656,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -671,7 +671,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -686,7 +686,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -701,7 +701,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -716,7 +716,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -731,7 +731,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -746,7 +746,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -761,7 +761,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -776,7 +776,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -791,7 +791,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -806,7 +806,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -821,7 +821,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -836,7 +836,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -851,7 +851,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -866,7 +866,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -881,7 +881,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -896,7 +896,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -911,7 +911,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -926,7 +926,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -941,7 +941,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -956,7 +956,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -971,7 +971,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -986,7 +986,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1001,7 +1001,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1016,7 +1016,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1031,7 +1031,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1046,7 +1046,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1061,7 +1061,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1076,7 +1076,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1091,7 +1091,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1106,7 +1106,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1121,7 +1121,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1136,7 +1136,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1151,7 +1151,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1166,7 +1166,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1181,7 +1181,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1196,7 +1196,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1211,7 +1211,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1226,7 +1226,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1241,7 +1241,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1256,7 +1256,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1271,7 +1271,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1286,7 +1286,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1301,7 +1301,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1316,7 +1316,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1331,7 +1331,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1346,7 +1346,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1361,7 +1361,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1376,7 +1376,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1391,7 +1391,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1406,7 +1406,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1421,7 +1421,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1436,7 +1436,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1451,7 +1451,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1466,7 +1466,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1481,7 +1481,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1496,7 +1496,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1511,7 +1511,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1526,7 +1526,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1541,7 +1541,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1556,7 +1556,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1571,7 +1571,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1586,7 +1586,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1601,7 +1601,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1616,7 +1616,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1631,7 +1631,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1646,7 +1646,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1661,7 +1661,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1676,7 +1676,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1691,7 +1691,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
@@ -1706,7 +1706,7 @@
               "conf": "mod_classic_classes.conf",
               "key": "ClassicClasses.Classes",
               "has": "6",
-              "default": "1 2 3 4 5 7 8 9 11"
+              "default": "1 2 3 4 5 6 7 8 9 11"
             }
           ],
           "setRows": {
