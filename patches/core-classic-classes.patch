@@ -1,32 +1,8 @@
 diff --git a/src/server/coa/AscensionCompat.cpp b/src/server/coa/AscensionCompat.cpp
-index 3168b2290..295f80a4f 100644
+index 3168b2290..4b043d873 100644
 --- a/src/server/coa/AscensionCompat.cpp
 +++ b/src/server/coa/AscensionCompat.cpp
-@@ -739,6 +739,14 @@ bool ReceivesClientRequests(Player const *player) {
-   return !player->GetSession()->IsBot();
- }
- 
-+// mod-classic-classes: the classic classes take the Character Advancement requests (buying, unlearning) like the CoA classes.
-+bool IsClassicClassOnRealm(Player const *player) {
-+  uint8 playerClass = player->getClass();
-+  if (!sConfigMgr->GetOption<bool>("ClassicClasses.Enable", false, false))
-+    return false;
-+  return (playerClass >= CLASS_WARRIOR && playerClass <= CLASS_WARLOCK) || playerClass == CLASS_DRUID;
-+}
-+
- enum LegacyQuestSpells : uint32
- {
-     QuestStoneskinTotem = 8073,
-@@ -2436,7 +2444,7 @@ public:
-       _pendingTalentRequests.erase(itr);
-     }
- 
--    if (!IsAscensionCustomClass(player) && !AscensionWildcard::IsWildcardHero(player) &&
-+    if (!IsAscensionCustomClass(player) && !IsClassicClassOnRealm(player) && !AscensionWildcard::IsWildcardHero(player) &&
-         !AscensionFreepick::HasFreepickBuild(player))
-       return;
-     for (TalentRequest const& request : requests)
-@@ -10281,8 +10289,9 @@ public:
+@@ -10281,8 +10281,9 @@ public:
        return std::nullopt;
  
      Classes actualClass = Classes(player->getClass());
@@ -85,18 +61,27 @@ index 90a0cf43f..16338d71b 100644
  
          std::vector<TrainerSpell> stock;
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
-index edcf67c27..6aa2b6123 100644
+index edcf67c27..8cfa9375d 100644
 --- a/src/server/game/Entities/Player/Player.cpp
 +++ b/src/server/game/Entities/Player/Player.cpp
-@@ -13341,7 +13341,10 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
-             continue;
- 
-         // skip wrong class and race skill saved in SkillRaceClassInfo.dbc
--        if (!GetSkillRaceClassInfo(_spell_idx->second->SkillLine, getRace(), getClass()))
-+        // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight skill lines; without
-+        // this the DK trainer and the Book of Ascension hide every DK spell (only unrestricted mounts pass).
-+        if (!GetSkillRaceClassInfo(_spell_idx->second->SkillLine, getRace(), getClass()) &&
-+            !(getClass() == CLASS_DEATH_KNIGHT && (_spell_idx->second->SkillLine == 770 || _spell_idx->second->SkillLine == 771 || _spell_idx->second->SkillLine == 772 || _spell_idx->second->SkillLine == 776)))
-             continue;
- 
+@@ -13330,6 +13330,20 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
+     if (bounds.first == bounds.second)
          return true;
+ 
++    // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight skill lines; without
++    // this the DK trainer and the Book of Ascension hide every DK spell (only unrestricted mounts pass).
++    if (getClass() == CLASS_DEATH_KNIGHT)
++    {
++        for (SkillLineAbilityMap::const_iterator dk = bounds.first; dk != bounds.second; ++dk)
++        {
++            uint32 const line = dk->second->SkillLine;
++            if ((line == 770 || line == 771 || line == 772 || line == 776) &&
++                (!dk->second->RaceMask || (dk->second->RaceMask & racemask)) &&
++                (!dk->second->ClassMask || (dk->second->ClassMask & classmask)))
++                return true;
++        }
++    }
++
+     for (SkillLineAbilityMap::const_iterator _spell_idx = bounds.first; _spell_idx != bounds.second; ++_spell_idx)
+     {
+         // skip wrong race skills
