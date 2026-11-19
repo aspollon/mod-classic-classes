@@ -7,11 +7,9 @@
 
 void AddSC_classic_classes();
 void AddSC_classic_bots();
-void Addmod_dkScripts();
 
 void Addmod_classic_classesScripts()
 {
     AddSC_classic_classes();
     AddSC_classic_bots();
-    Addmod_dkScripts();
 }

@@ -107,28 +107,3 @@ diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStor
  
      // Paths are walked by position; drop unused node numbers (CoA's path 1984 starts at node 1).
      for (TaxiPathNodeList& nodes : sTaxiPathNodesByPath)
-diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
-index edcf67c27..8cfa9375d 100644
---- a/src/server/game/Entities/Player/Player.cpp
-+++ b/src/server/game/Entities/Player/Player.cpp
-@@ -13330,6 +13330,20 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
-     if (bounds.first == bounds.second)
-         return true;
- 
-+    // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight skill lines; without
-+    // this the DK trainer and the Book of Ascension hide every DK spell (only unrestricted mounts pass).
-+    if (getClass() == CLASS_DEATH_KNIGHT)
-+    {
-+        for (SkillLineAbilityMap::const_iterator dk = bounds.first; dk != bounds.second; ++dk)
-+        {
-+            uint32 const line = dk->second->SkillLine;
-+            if ((line == 770 || line == 771 || line == 772 || line == 776) &&
-+                (!dk->second->RaceMask || (dk->second->RaceMask & racemask)) &&
-+                (!dk->second->ClassMask || (dk->second->ClassMask & classmask)))
-+                return true;
-+        }
-+    }
-+
-     for (SkillLineAbilityMap::const_iterator _spell_idx = bounds.first; _spell_idx != bounds.second; ++_spell_idx)
-     {
-         // skip wrong race skills

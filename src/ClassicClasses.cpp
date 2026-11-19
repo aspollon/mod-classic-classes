@@ -5,8 +5,8 @@
  * Conquest of Azeroth plays the classic classes the way Ascension's Warcraft Reborn realms did - their Reborn spells,
  * trainers, talents and summons - but only on a realm that offers nothing else (CoA.ClassModel = "wcr"). The core
  * patch of this module (patches/core-classic-classes.patch) lets a Conquest of Azeroth realm offer them too, while
- * ClassicClasses.Enable is on. This file decides which of them can be created, as ClassicClasses.Classes says. The
- * Death Knight (6) starts at level 1 with his own trainers (src/DeathKnight, after dudemcbro's mod-dk).
+ * ClassicClasses.Enable is on. This file decides which of them can be created: the Death Knight never (his spells
+ * begin at 55), the others as ClassicClasses.Classes says.
  */
 
 #include "Chat.h"
@@ -28,11 +28,10 @@ namespace
 {
     constexpr uint32 Bit(uint32 classId) { return 1u << (classId - 1); }
 
-    // The classic classes a character can be created in; the Death Knight is src/DeathKnight.
+    // The classic classes a character can be created in: all of them but the Death Knight.
     constexpr uint32 PLAYABLE = Bit(CLASS_WARRIOR) | Bit(CLASS_PALADIN) | Bit(CLASS_HUNTER) | Bit(CLASS_ROGUE) |
         Bit(CLASS_PRIEST) | Bit(CLASS_SHAMAN) | Bit(CLASS_MAGE) | Bit(CLASS_WARLOCK) | Bit(CLASS_DRUID);
     constexpr uint32 ALL_CLASSIC = PLAYABLE | Bit(CLASS_DEATH_KNIGHT);
-
 
     char const* Name(uint32 classId)
     {
@@ -61,7 +60,9 @@ namespace
             if (Optional<uint32> classId = Acore::StringTo<uint32>(token))
                 if (*classId >= 1 && *classId <= 11 && (Bit(*classId) & ALL_CLASSIC))
                     mask |= Bit(*classId);
-        return mask & ALL_CLASSIC;
+        if (mask & Bit(CLASS_DEATH_KNIGHT))
+            LOG_WARN("module", "mod-classic-classes: the Death Knight cannot be played - his spells begin at 55; left out");
+        return mask & PLAYABLE;
     }
 
     // Percent of their base health the classic classes get on top (ClassicClasses.BaseHealthBonus), read at config load.
@@ -89,16 +90,7 @@ public:
 class ClassicClassesWorld : public WorldScript
 {
 public:
-    ClassicClassesWorld() : WorldScript("ClassicClassesWorld",
-        { WORLDHOOK_ON_AFTER_CONFIG_LOAD, WORLDHOOK_ON_STARTUP, WORLDHOOK_ON_LOAD_CUSTOM_DATABASE_TABLE }) { }
-
-    /// Before the spawns are read: the Death Knight's trainers and rune forges are seen only while he can be played.
-    void OnLoadCustomDatabaseTable() override
-    {
-        uint32 const phase = (sConfigMgr->GetOption<bool>("ClassicClasses.Enable", true) && (Wanted() & Bit(CLASS_DEATH_KNIGHT))) ? 1 : 0;
-        WorldDatabase.DirectExecute("UPDATE `creature` SET `phaseMask` = {} WHERE `Comment` LIKE 'mod-dk:%'", phase);
-        WorldDatabase.DirectExecute("UPDATE `gameobject` SET `phaseMask` = {} WHERE `Comment` LIKE 'mod-dk:%'", phase);
-    }
+    ClassicClassesWorld() : WorldScript("ClassicClassesWorld", { WORLDHOOK_ON_AFTER_CONFIG_LOAD, WORLDHOOK_ON_STARTUP }) { }
 
     /// The core reads CharacterCreating.Disabled.ClassMask from worldserver.conf just before this; the classic classes
     /// not offered are added to it. mod-playerbots creates its random bots by the same mask.

@@ -3,8 +3,8 @@
 -- Loaded after CharacterCreate.xml (GlueXML.toc). AFK Realm builds the client patch and writes the list of classes
 -- the realm offers into CLASSIC_CLASSES below.
 
-local CLASSIC_CLASSES = { [1] = true, [2] = true, [3] = true, [4] = true, [5] = true, [6] = true, [7] = true, [8] = true, [9] = true, [11] = true } -- @CLASSES@
-local ORDER = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT", "SHAMAN", "MAGE", "WARLOCK", "DRUID" }
+local CLASSIC_CLASSES = { [1] = true, [2] = true, [3] = true, [4] = true, [5] = true, [7] = true, [8] = true, [9] = true, [11] = true } -- @CLASSES@
+local ORDER = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "SHAMAN", "MAGE", "WARLOCK", "DRUID" }
 
 -- The AFK Realm badge belongs to the login wallpaper, not to the whole glue UI.
 -- Parented to AccountLogin it disappears with the login screen and never sits over
@@ -137,8 +137,6 @@ function CharacterCreate_ShowCoAClasses(self)
 		end
 	end
 
-	-- Ten buttons (with the Death Knight) fit the row only a little closer together.
-	row.spacing = layoutIndex > 9 and 24 or 36
 	row:SetShown(layoutIndex > 0)
 	container.spacing = layoutIndex > 0 and 20 or 42
 	row:MarkDirty()
@@ -153,21 +151,6 @@ if type(CharacterCreate_ShowRegularClasses) == "function" then
 		if container and container.Row3 then
 			container.Row3:Hide()
 		end
-		local result = showRegular(self, ...)
-		-- CoA Custom leaves the Death Knight out of this row; with mod-classic-classes he sits after the Priest.
-		if CLASSIC_CLASSES[6] and container and container.Row1 and self.classButtonPool then
-			local className, classFile = GetClassInfo(6)
-			if className and classFile then
-				local button = self.classButtonPool:Acquire()
-				button:SetID(6)
-				button.layoutIndex = 5.5
-				button:SetParent(container.Row1)
-				button:Show()
-				button:SetClass(className, classFile, true)
-				container.Row1:MarkDirty()
-				container:MarkDirty()
-			end
-		end
-		return result
+		return showRegular(self, ...)
 	end
 end

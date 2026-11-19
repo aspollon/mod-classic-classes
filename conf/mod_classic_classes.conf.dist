@@ -24,16 +24,14 @@ ClassicClasses.Enable = 1
 #    ClassicClasses.Classes
 #        Description: The classic classes that can be created, as class numbers separated by spaces:
 #                     1 Warrior, 2 Paladin, 3 Hunter, 4 Rogue, 5 Priest, 7 Shaman, 8 Mage, 9 Warlock, 11 Druid.
-#                     6 Death Knight (experimental): starts at level 1 with his own trainers and runeforging
-#                     from 20 (the options ClassicClasses.DeathKnight.* below, after dudemcbro's mod-dk). Needs
-#                     AFK64.exe: the 32-bit client's character creation holds 30 classes a race.
+#                     The Death Knight (6) is not playable: his spells begin at 55, and he would skip the world.
 #                     A class left out here is refused by the server; the class choice of the client still shows
 #                     it until its client patch is built again (AFK Realm does that when this file changes).
 #                     The random bots of mod-playerbots are created in the same classes.
 #        Default:     "1 2 3 4 5 7 8 9 11"
 #
 
-ClassicClasses.Classes = "1 2 3 4 5 6 7 8 9 11"
+ClassicClasses.Classes = "1 2 3 4 5 7 8 9 11"
 
 #
 #    ClassicClasses.BaseHealthBonus
@@ -49,111 +47,3 @@ ClassicClasses.Classes = "1 2 3 4 5 6 7 8 9 11"
 #
 
 ClassicClasses.BaseHealthBonus = -1
-
-###################################################################################################
-# DEATH KNIGHT (6 in ClassicClasses.Classes) - after mod-dk by dudemcbro (https://github.com/dudemcbro/mod-dk, GPL v3)
-###################################################################################################
-
-
-########################################
-# mod-dk configuration
-########################################
-#
-#    Changes apply after `.reload config` or a restart, except ClassicClasses.DeathKnight.StartLevel
-#    and ClassicClasses.DeathKnight.MinLevelForHeroicCharacter, which need a restart. Auras that are
-#    already active (presences, diseases) keep their values until cast again.
-#
-#    ClassicClasses.DeathKnight.StartLevel
-#        Description: Level new Death Knights start at. Replaces
-#                     StartHeroicPlayerLevel from worldserver.conf.
-#                     55 plays the stock Ebon Hold intro instead of the
-#                     level 1 start this module is built for.
-#        Default:     1
-#                     -1 - Keep StartHeroicPlayerLevel from worldserver.conf
-#                          (0 does the same)
-#
-
-ClassicClasses.DeathKnight.StartLevel = 1
-
-#
-#    ClassicClasses.DeathKnight.MinLevelForHeroicCharacter
-#        Description: Level of another character the account needs before it
-#                     can create a Death Knight. Replaces
-#                     CharacterCreating.MinLevelForHeroicCharacter from
-#                     worldserver.conf.
-#        Default:     0  - No requirement
-#                     -1 - Keep the worldserver.conf setting
-#
-
-ClassicClasses.DeathKnight.MinLevelForHeroicCharacter = 0
-
-#
-#    ClassicClasses.DeathKnight.Scaling.Enable
-#        Description: Scale DK damage, healing, presences and minions down below
-#                     level 55 so DKs leveled from 1 do not outclass other classes.
-#        Default:     1 - Enabled
-#                     0 - Disabled
-#
-
-ClassicClasses.DeathKnight.Scaling.Enable = 1
-
-#
-#    ClassicClasses.DeathKnight.Scaling.Strength
-#        Description: How much of the low level scaling applies, from 0.0 (none)
-#                     to 1.0 (the full curve). Values in between move every
-#                     scale toward 1.0. The client patch tooltips assume 1.0.
-#        Default:     1.0
-#
-
-ClassicClasses.DeathKnight.Scaling.Strength = 1.0
-
-#
-#    ClassicClasses.DeathKnight.ThreatBonus.Enable
-#        Description: Extra threat for DK spells below level 30 in Blood or
-#                     Frost Presence, so low level DKs can hold threat.
-#        Default:     1 - Enabled
-#                     0 - Disabled
-#
-
-ClassicClasses.DeathKnight.ThreatBonus.Enable = 1
-
-#
-#    ClassicClasses.DeathKnight.SpellProgression.Enable
-#        Description: Remove DK spells above the character's level (table
-#                     mod_dk_spell_progression) on login and level change, and
-#                     teach the level 1 spells.
-#        Default:     1 - Enabled
-#                     0 - Disabled
-#
-
-ClassicClasses.DeathKnight.SpellProgression.Enable = 1
-
-#
-#    ClassicClasses.DeathKnight.Reentry.Enable
-#        Description: Let the Ebon Herald (reentry NPC) send level 55+ DKs who
-#                     never finished the Ebon Hold intro back to Acherus.
-#        Default:     1 - Enabled
-#                     0 - Disabled
-#
-
-ClassicClasses.DeathKnight.Reentry.Enable = 1
-
-#
-#    ClassicClasses.DeathKnight.EbonHoldRescue.Enable
-#        Description: Send DKs below level 55 found in Ebon Hold on login (for
-#                     example after logging out during the intro cinematic) to
-#                     their racial start.
-#        Default:     1 - Enabled
-#                     0 - Disabled
-#
-
-ClassicClasses.DeathKnight.EbonHoldRescue.Enable = 1
-
-#
-#    ClassicClasses.DeathKnight.Debug
-#        Description: Log every scaled DK hit and threat bonus (logger "module").
-#        Default:     0 - Disabled
-#                     1 - Enabled
-#
-
-ClassicClasses.DeathKnight.Debug = 0
