@@ -1,5 +1,5 @@
 diff --git a/src/Ai/Base/Actions/CoaWcrAction.cpp b/src/Ai/Base/Actions/CoaWcrAction.cpp
-index 84d3c78..fc72128 100644
+index 84d3c78a..fc721285 100644
 --- a/src/Ai/Base/Actions/CoaWcrAction.cpp
 +++ b/src/Ai/Base/Actions/CoaWcrAction.cpp
 @@ -20,7 +20,7 @@ bool CoaWcrAction::Execute(Event event)
@@ -12,10 +12,10 @@ index 84d3c78..fc72128 100644
          // Said once a bot, so that an add-on asking every bot does not flood its player.
          static std::mutex lock;
 diff --git a/src/Ai/Class/Coa/CoaReborn.cpp b/src/Ai/Class/Coa/CoaReborn.cpp
-index 64e83f8..2c8d9f0 100644
+index c4daebb4..3fa48a58 100644
 --- a/src/Ai/Class/Coa/CoaReborn.cpp
 +++ b/src/Ai/Class/Coa/CoaReborn.cpp
-@@ -191,9 +191,9 @@ AscensionWarcraftReborn::Data const* RebornData()
+@@ -204,9 +204,9 @@ AscensionWarcraftReborn::Data const* RebornData()
      static std::unique_ptr<AscensionWarcraftReborn::Data> const data = []
      {
          auto loaded = std::make_unique<AscensionWarcraftReborn::Data>();
@@ -27,7 +27,7 @@ index 64e83f8..2c8d9f0 100644
                  LOG_ERROR("playerbots", "coa wcr: the Warcraft Reborn tables did not load, bots train stock spells");
              loaded.reset();
          }
-@@ -336,6 +336,14 @@ bool IsRebornRealm()
+@@ -349,6 +349,14 @@ bool IsRebornRealm()
      return reborn;
  }
  
@@ -42,7 +42,7 @@ index 64e83f8..2c8d9f0 100644
  bool IsRebornClass(uint8 classId)
  {
      return classId >= CLASS_WARRIOR && classId <= CLASS_DRUID && classId != CLASS_HERO;
-@@ -343,12 +351,12 @@ bool IsRebornClass(uint8 classId)
+@@ -356,12 +364,12 @@ bool IsRebornClass(uint8 classId)
  
  bool IsRebornBot(Player const* player)
  {
@@ -57,7 +57,7 @@ index 64e83f8..2c8d9f0 100644
  }
  
  bool KnowsSpellOrTwin(Player const* player, uint32 spellId)
-@@ -611,7 +619,7 @@ void EnsureWcrBuild(Player* bot)
+@@ -624,7 +632,7 @@ void EnsureWcrBuild(Player* bot)
  
  bool SetWcrSpec(Player* bot, uint8 spec, std::string& error)
  {
@@ -67,7 +67,7 @@ index 64e83f8..2c8d9f0 100644
          error = "not a Warcraft Reborn realm";
          return false;
 diff --git a/src/Ai/Class/Coa/CoaReborn.h b/src/Ai/Class/Coa/CoaReborn.h
-index 10b214f..03ea013 100644
+index 10b214fb..03ea0138 100644
 --- a/src/Ai/Class/Coa/CoaReborn.h
 +++ b/src/Ai/Class/Coa/CoaReborn.h
 @@ -28,13 +28,17 @@ class Trainer;
@@ -91,10 +91,10 @@ index 10b214f..03ea013 100644
  
  // The stock spell or its Reborn copy.
 diff --git a/src/Ai/Class/Coa/CoaSpecialization.cpp b/src/Ai/Class/Coa/CoaSpecialization.cpp
-index 8e1bf8d..e72ac54 100644
+index c871db06..ad496ff3 100644
 --- a/src/Ai/Class/Coa/CoaSpecialization.cpp
 +++ b/src/Ai/Class/Coa/CoaSpecialization.cpp
-@@ -728,7 +728,7 @@ namespace
+@@ -854,7 +854,7 @@ namespace
  // the tree of their Character Advancement build, which they change through the tree's build.
  bool IsStockClass(uint8 classId)
  {
@@ -103,9 +103,9 @@ index 8e1bf8d..e72ac54 100644
  }
  
  CoaRole StockRole(Player* bot)
-@@ -743,7 +743,8 @@ CoaRole RoleOfMember(Player* player)
+@@ -869,7 +869,8 @@ CoaRole RoleOfMember(Player* player)
  
- bool ClassCanPlay(uint8 classId, CoaRole role)
+ bool ClassCanPlay(uint8 classId, CoaRole role, bool hardContent = false)
  {
 -    if (IsRebornRealm())
 +    // A realm of the original classes only, or one of them next to the classes of CoA (mod-classic-classes).
@@ -114,10 +114,10 @@ index 8e1bf8d..e72ac54 100644
      // A Wildcard Hero plays any role: a random one drafts a build of the role it is recruited for.
      if (classId == CLASS_HERO && IsWildcardRealm())
 diff --git a/src/Script/PlayerbotCommandScript.cpp b/src/Script/PlayerbotCommandScript.cpp
-index 7797a9f..58a6401 100644
+index 64d16a70..97637060 100644
 --- a/src/Script/PlayerbotCommandScript.cpp
 +++ b/src/Script/PlayerbotCommandScript.cpp
-@@ -245,7 +245,7 @@ public:
+@@ -246,7 +246,7 @@ public:
  
      static void HandleCoaWcr(ChatHandler* handler, std::string const& args)
      {
