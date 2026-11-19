@@ -63,6 +63,15 @@ index 90a0cf43f..16338d71b 100644
 diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStores/DBCStores.cpp
 --- a/src/server/game/DataStores/DBCStores.cpp
 +++ b/src/server/game/DataStores/DBCStores.cpp
+@@ -578,7 +578,7 @@ void LoadDBCStores(std::string const& dataPath)
+ 
+             // store class talent tab pages
+             for (uint32 cls = 1; cls < MAX_CLASSES; ++cls)
+-                if (talentTabInfo->ClassMask & (1 << (cls - 1)))
++                if (talentTabInfo->ClassMask & (1 << (cls - 1)) && talentTabInfo->tabpage < MAX_TALENT_TABS)
+                     sTalentTabPages[cls][talentTabInfo->tabpage] = talentTabId;
+         }
+     }
 @@ -587,15 +587,18 @@ void LoadDBCStores(std::string const& dataPath)
          if (TaxiPathEntry const* entry = sTaxiPathStore.LookupEntry(i))
              sTaxiPathSetBySource[entry->from][entry->to] = entry;
