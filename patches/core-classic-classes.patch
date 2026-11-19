@@ -63,7 +63,7 @@ index 90a0cf43f..16338d71b 100644
 diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStores/DBCStores.cpp
 --- a/src/server/game/DataStores/DBCStores.cpp
 +++ b/src/server/game/DataStores/DBCStores.cpp
-@@ -587,8 +587,11 @@ void LoadDBCStores(std::string const& dataPath)
+@@ -587,15 +587,17 @@ void LoadDBCStores(std::string const& dataPath)
          if (TaxiPathEntry const* entry = sTaxiPathStore.LookupEntry(i))
              sTaxiPathSetBySource[entry->from][entry->to] = entry;
  
@@ -77,6 +77,26 @@ diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStor
      std::vector<uint32> pathLength;
      pathLength.resize(pathCount);                           // 0 and some other indexes not used
  
+-    for (uint32 i = 1; i < sTaxiPathNodeStore.GetNumRows(); ++i)
+-        if (TaxiPathNodeEntry const* entry = sTaxiPathNodeStore.LookupEntry(i))
+-            if (pathLength[entry->path] < entry->index + 1)
+-                pathLength[entry->path] = entry->index + 1;
++    for (TaxiPathNodeEntry const* entry : sTaxiPathNodeStore)
++        if (entry->path < pathLength.size() && pathLength[entry->path] < entry->index + 1)
++            pathLength[entry->path] = entry->index + 1;
+ 
+     // Set path length
+     sTaxiPathNodesByPath.resize(pathCount);                 // 0 and some other indexes not used
+@@ -604,7 +606,8 @@ void LoadDBCStores(std::string const& dataPath)
+ 
+     // fill data
+     for (TaxiPathNodeEntry const* entry : sTaxiPathNodeStore)
+-        sTaxiPathNodesByPath[entry->path][entry->index] = entry;
++        if (entry->path < sTaxiPathNodesByPath.size() && entry->index < sTaxiPathNodesByPath[entry->path].size())
++            sTaxiPathNodesByPath[entry->path][entry->index] = entry;
+ 
+     // Paths are walked by position; drop unused node numbers (CoA's path 1984 starts at node 1).
+     for (TaxiPathNodeList& nodes : sTaxiPathNodesByPath)
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
 index edcf67c27..8cfa9375d 100644
 --- a/src/server/game/Entities/Player/Player.cpp
