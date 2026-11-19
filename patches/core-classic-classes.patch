@@ -63,7 +63,7 @@ index 90a0cf43f..16338d71b 100644
 diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStores/DBCStores.cpp
 --- a/src/server/game/DataStores/DBCStores.cpp
 +++ b/src/server/game/DataStores/DBCStores.cpp
-@@ -587,15 +587,17 @@ void LoadDBCStores(std::string const& dataPath)
+@@ -587,15 +587,18 @@ void LoadDBCStores(std::string const& dataPath)
          if (TaxiPathEntry const* entry = sTaxiPathStore.LookupEntry(i))
              sTaxiPathSetBySource[entry->from][entry->to] = entry;
  
@@ -82,7 +82,8 @@ diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStor
 -            if (pathLength[entry->path] < entry->index + 1)
 -                pathLength[entry->path] = entry->index + 1;
 +    for (TaxiPathNodeEntry const* entry : sTaxiPathNodeStore)
-+        if (entry->path < pathLength.size() && pathLength[entry->path] < entry->index + 1)
++        if (entry->path < pathLength.size() && entry->index < 10000 &&
++            pathLength[entry->path] < entry->index + 1)
 +            pathLength[entry->path] = entry->index + 1;
  
      // Set path length
