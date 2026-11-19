@@ -1,8 +1,32 @@
 diff --git a/src/server/coa/AscensionCompat.cpp b/src/server/coa/AscensionCompat.cpp
-index 7a8042f5..ca127eb6 100644
+index 3168b2290..295f80a4f 100644
 --- a/src/server/coa/AscensionCompat.cpp
 +++ b/src/server/coa/AscensionCompat.cpp
-@@ -10188,8 +10188,9 @@ public:
+@@ -739,6 +739,14 @@ bool ReceivesClientRequests(Player const *player) {
+   return !player->GetSession()->IsBot();
+ }
+ 
++// mod-classic-classes: the classic classes take the Character Advancement requests (buying, unlearning) like the CoA classes.
++bool IsClassicClassOnRealm(Player const *player) {
++  uint8 playerClass = player->getClass();
++  if (!sConfigMgr->GetOption<bool>("ClassicClasses.Enable", false, false))
++    return false;
++  return (playerClass >= CLASS_WARRIOR && playerClass <= CLASS_WARLOCK) || playerClass == CLASS_DRUID;
++}
++
+ enum LegacyQuestSpells : uint32
+ {
+     QuestStoneskinTotem = 8073,
+@@ -2436,7 +2444,7 @@ public:
+       _pendingTalentRequests.erase(itr);
+     }
+ 
+-    if (!IsAscensionCustomClass(player) && !AscensionWildcard::IsWildcardHero(player) &&
++    if (!IsAscensionCustomClass(player) && !IsClassicClassOnRealm(player) && !AscensionWildcard::IsWildcardHero(player) &&
+         !AscensionFreepick::HasFreepickBuild(player))
+       return;
+     for (TalentRequest const& request : requests)
+@@ -10281,8 +10289,9 @@ public:
        return std::nullopt;
  
      Classes actualClass = Classes(player->getClass());
@@ -14,7 +38,7 @@ index 7a8042f5..ca127eb6 100644
      if (actualClass < CLASS_BARBARIAN || actualClass > CLASS_SPIRIT_MAGE)
        return std::nullopt;
 diff --git a/src/server/coa/AscensionFreepick.cpp b/src/server/coa/AscensionFreepick.cpp
-index e6d629d8..ae25602b 100644
+index e6d629d8a..ae25602bd 100644
 --- a/src/server/coa/AscensionFreepick.cpp
 +++ b/src/server/coa/AscensionFreepick.cpp
 @@ -49,6 +49,9 @@ Realm ReadRealm()
@@ -37,7 +61,7 @@ index e6d629d8..ae25602b 100644
          if (CurrentRealm.ConquestOfAzeroth)
              sGameEventMgr->StartInternalEvent(COA_CLASS_TRAINERS_EVENT);
 diff --git a/src/server/coa/AscensionWarcraftReborn.cpp b/src/server/coa/AscensionWarcraftReborn.cpp
-index 90a0cf43..16338d71 100644
+index 90a0cf43f..16338d71b 100644
 --- a/src/server/coa/AscensionWarcraftReborn.cpp
 +++ b/src/server/coa/AscensionWarcraftReborn.cpp
 @@ -34,7 +34,8 @@ bool StockClass(uint32 classId)
@@ -61,9 +85,12 @@ index 90a0cf43..16338d71 100644
  
          std::vector<TrainerSpell> stock;
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
+index edcf67c27..6aa2b6123 100644
 --- a/src/server/game/Entities/Player/Player.cpp
 +++ b/src/server/game/Entities/Player/Player.cpp
-@@ -13343,5 +13343,8 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
+@@ -13341,7 +13341,10 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
+             continue;
+ 
          // skip wrong class and race skill saved in SkillRaceClassInfo.dbc
 -        if (!GetSkillRaceClassInfo(_spell_idx->second->SkillLine, getRace(), getClass()))
 +        // mod-classic-classes: a custom race has no SkillRaceClassInfo row for the Death Knight skill lines; without
