@@ -60,6 +60,23 @@ index 90a0cf43f..16338d71b 100644
              continue;
  
          std::vector<TrainerSpell> stock;
+diff --git a/src/server/game/DataStores/DBCStores.cpp b/src/server/game/DataStores/DBCStores.cpp
+--- a/src/server/game/DataStores/DBCStores.cpp
++++ b/src/server/game/DataStores/DBCStores.cpp
+@@ -587,8 +587,11 @@ void LoadDBCStores(std::string const& dataPath)
+         if (TaxiPathEntry const* entry = sTaxiPathStore.LookupEntry(i))
+             sTaxiPathSetBySource[entry->from][entry->to] = entry;
+ 
+-    // Calculate path nodes count
+-    uint32 pathCount = sTaxiPathStore.GetNumRows();
++    // Calculate path nodes count. CoA's path IDs are not the row count (path 1984
++    // exists with fewer rows), so size by the highest path ID instead.
++    uint32 pathCount = 1;
++    for (TaxiPathEntry const* entry : sTaxiPathStore)
++        pathCount = std::max(pathCount, entry->ID + 1);
+     std::vector<uint32> pathLength;
+     pathLength.resize(pathCount);                           // 0 and some other indexes not used
+ 
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
 index edcf67c27..8cfa9375d 100644
 --- a/src/server/game/Entities/Player/Player.cpp
